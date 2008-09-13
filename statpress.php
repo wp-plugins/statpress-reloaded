@@ -727,7 +727,7 @@ document.getElementById(thediv).style.display="none"
 		foreach ($qry2 as $details) {
 			print "<tr>";
 			print "<td valign='top' width='151'><div><font size='1' color='#3B3B3B'><strong>".irihdate($details->date)." ".$details->time."</strong></font></div></td>";
-			print "<td><div><a href='".get_bloginfo('url')."/?".$details->urlrequested."' target='_blank'>".iri_StatPress_Decode($details->urlrequested)."</a>";
+			print "<td><div><a href='".get_bloginfo('url'). ((!permalinksEnabled()) ? "/?" : "" ) .$details->urlrequested."' target='_blank'>".iri_StatPress_Decode($details->urlrequested)."</a>";
 			if($details->searchengine != '') {
 				print "<br><small>".__('arrived from','statpress')." <b>".$details->searchengine."</b> ".__('searching','statpress')." <a href='".$details->referrer."' target=_blank>".$details->search."</a></small>";
 			} elseif($details->referrer != '' && strpos($details->referrer,get_option('home'))===FALSE) {
@@ -1286,7 +1286,7 @@ function iriStatPressUpdate() {
 	print "<br>";
 	$wpdb->query("UPDATE $table_name SET searchengine = '', search='';");
 	print "...null-ed!<br>";
-	$qry = $wpdb->get_results("SELECT id, referrer FROM $table_name");
+	$qry = $wpdb->get_results("SELECT id, referrer FROM $table_name WHERE referrer !=''");
 	print "...select-ed!<br>";
 	foreach ($qry as $rk) {
 		list($searchengine,$search_phrase)=explode("|",iriGetSE($rk->referrer));

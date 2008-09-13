@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.0.2
 Tested up to: 2.6.2
-Stable Tag: 1.4
+Stable Tag: 1.4.1
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
@@ -51,6 +51,7 @@ The widget is customizable. These are the available variables:
 
 Now you could add these values everywhere! StatPress offers a new PHP function *StatPress_Print()*.
 * i.e. StatPress_Print("%totalvisits% total visits.");
+Put it whereever you want the details to be displayed in your template. Remember, as this is PHP, it needs to be surrounded by PHP-Tags!
 
 
 == Installation ==
@@ -267,9 +268,15 @@ Please visit my <a href="http://blog.matrixagents.org/statpress-reloaded/">blog 
 
 * XSS vulnerability patch (Thanks to rogeriopvl blog.rogeriopvl.com)
 
-*Version 1.2 (13 Sep 2008)*
+*Version 1.4 (13 Sep 2008)*
 
-* Bugfix fpr broken "page viewed" link when using permalinks
+* Bugfix for broken "page viewed" link when using permalinks
 * Sometimes Firefox' referrer-strings were not properly decoded
 * Updated definition files (Chrome, baby!)
 
+*Version 1.4.1 (13 Sep 2008)*
+
+* Links to your blog on "Spy"-page also were broken when using permalinks -> fixed.
+* First tiny beginnings of speed improvement (Thanks to bfowle - http://www.morgan-howard.com/ )
+* Updated definition files (Chrome does work now, thanks to trm96 - http://trm96.com/ )
+* Hopefully got rid of unnecessary additional root dir in ZIP-download from WP.org
