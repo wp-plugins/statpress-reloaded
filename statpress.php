@@ -3,7 +3,7 @@
 Plugin Name: StatPress Reloaded
 Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
 Description: Improved real time stats for your blog
-Version: 1.4
+Version: 1.4.1
 Author: Manuel Grabowski (previously: Daniele Lippi)
 Author URI: http://blog.matrixagents.org/
 */
