@@ -24,7 +24,7 @@ Could you translate StatPress in your language? Please contact me!
 
 = What's new? =
 StatPress is alive again! Since the original author, Danielle Lippi, seems to have stopped working on it, i'm dealing with it - thank you, GPL. ;)
-This first release contians two bug fices and many new browser agents, search engines and spider definitions. More to come!
+This first release contains two bug fixes and many new browser agents, search engines and spider definitions. More to come!
 
 The changelog is at "Other Notes".
 
