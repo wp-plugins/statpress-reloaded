@@ -3,7 +3,7 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
    Description: Improved real time stats for your blog
-   Version: 1.4.3
+   Version: 1.4.4
    Author: Manuel Grabowski (previously: Daniele Lippi)
    Author URI: http://blog.matrixagents.org/
    */
@@ -705,7 +705,7 @@
           $qry = $wpdb->get_results("SELECT date,time,referrer,urlrequested,search,searchengine FROM $table_name WHERE search<>'' ORDER BY id DESC $querylimit");
           foreach ($qry as $rk)
           {
-              print "<tr><td>" . irihdate($rk->date) . "</td><td>" . $rk->time . "</td><td><a href='" . $rk->referrer . "'>" . $rk->search . "</a></td><td>" . $rk->searchengine . "</td><td><a href='" . parse_url(get_bloginfo('url'), PHP_URL_SCHEME) . '://' . parse_url(get_bloginfo('url'), PHP_URL_HOST) . ((!permalinksEnabled()) ? "/?" : "" ) . $rk->urlrequested . "'>" . __('page viewed', 'statpress') . "</a></td></tr>\n";
+              print "<tr><td>" . irihdate($rk->date) . "</td><td>" . $rk->time . "</td><td><a href='" . $rk->referrer . "'>" . $rk->search . "</a></td><td>" . $rk->searchengine . "</td><td><a href='" . irigetblogurl() . $rk->urlrequested . "'>" . __('page viewed', 'statpress') . "</a></td></tr>\n";
           }
           print "</table></div>";
           
@@ -715,7 +715,7 @@
           $qry = $wpdb->get_results("SELECT date,time,referrer,urlrequested FROM $table_name WHERE ((referrer NOT LIKE '" . get_option('home') . "%') AND (referrer <>'') AND (searchengine='')) ORDER BY id DESC $querylimit");
           foreach ($qry as $rk)
           {
-              print "<tr><td>" . irihdate($rk->date) . "</td><td>" . $rk->time . "</td><td><a href='" . $rk->referrer . "'>" . iri_StatPress_Abbrevia($rk->referrer, 80) . "</a></td><td><a href='" . parse_url(get_bloginfo('url'), PHP_URL_SCHEME) . '://' . parse_url(get_bloginfo('url'), PHP_URL_HOST) . ((!permalinksEnabled()) ? "/?" : "" ) . $rk->urlrequested . "'>" . __('page viewed', 'statpress') . "</a></td></tr>\n";
+              print "<tr><td>" . irihdate($rk->date) . "</td><td>" . $rk->time . "</td><td><a href='" . $rk->referrer . "'>" . iri_StatPress_Abbrevia($rk->referrer, 80) . "</a></td><td><a href='" . irigetblogurl() . $rk->urlrequested . "'>" . __('page viewed', 'statpress') . "</a></td></tr>\n";
           }
           print "</table></div>";
           
@@ -856,7 +856,7 @@ document.getElementById(thediv).style.display="none"
               {
                   print "<tr>";
                   print "<td valign='top' width='151'><div><font size='1' color='#3B3B3B'><strong>" . irihdate($details->date) . " " . $details->time . "</strong></font></div></td>";
-                  print "<td><div><a href='" . parse_url(get_bloginfo('url'), PHP_URL_SCHEME) . '://' . parse_url(get_bloginfo('url'), PHP_URL_HOST) . ((!permalinksEnabled()) ? "/?" : "" ) . $details->urlrequested . "' target='_blank'>" . iri_StatPress_Decode($details->urlrequested) . "</a>";
+                  print "<td><div><a href='" . irigetblogurl() . $details->urlrequested . "' target='_blank'>" . iri_StatPress_Decode($details->urlrequested) . "</a>";
                   if ($details->searchengine != '')
                   {
                       print "<br><small>" . __('arrived from', 'statpress') . " <b>" . $details->searchengine . "</b> " . __('searching', 'statpress') . " <a href='" . $details->referrer . "' target=_blank>" . $details->search . "</a></small>";
@@ -1153,6 +1153,11 @@ document.getElementById(thediv).style.display="none"
           return $urlRequested;
       }
       
+      function irigetblogurl()
+      {
+      	$prsurl = parse_url(get_bloginfo('url'));
+      	return $prsurl['PHP_URL_SCHEME'] . '://' . $prsurl['PHP_URL_HOST'] . ((!permalinksEnabled()) ? "/?" : "" );
+      }
       
       // Converte da data us to default format di Wordpress
       function irihdate($dt = "00000000")
@@ -1445,7 +1450,8 @@ function iri_StatPress_extractfeedreq($url)
     }
     else
     {
-    		$res = parse_url($url, PHP_URL_PATH) . parse_url($url, PHP_URL_QUERY);
+    	$prsurl = parse_url($url);
+    	$res = $prsurl['path'] . $$prsurl['query'];
     }
     
     return $res;
@@ -1516,7 +1522,8 @@ function iri_StatPress_extractfeedreq($url)
           else
           {
               // Trap feeds
-              $feed = iri_StatPress_is_feed(parse_url(get_bloginfo('url'), PHP_URL_SCHEME) . '://' . parse_url(get_bloginfo('url'), PHP_URL_HOST) . $_SERVER['REQUEST_URI']);
+              $prsurl = parse_url(get_bloginfo('url'));
+              $feed = iri_StatPress_is_feed($prsurl['scheme'] . '://' . $prsurl['host'] . $_SERVER['REQUEST_URI']);
               // Get OS and browser
               $os = iriGetOS($userAgent);
               $browser = iriGetBrowser($userAgent);
