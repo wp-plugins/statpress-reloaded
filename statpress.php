@@ -3,7 +3,7 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
    Description: Improved real time stats for your blog
-   Version: 1.4.2
+   Version: 1.4.3
    Author: Manuel Grabowski (previously: Daniele Lippi)
    Author URI: http://blog.matrixagents.org/
    */
@@ -964,7 +964,7 @@ document.getElementById(thediv).style.display="none"
     </td>
   </tr>    
   </table>  
-  <input type=hidden name=page value='wp-statpress/statpress.php'><input type=hidden name=statpress_action value=search>
+  <input type=hidden name=page value='./statpress.php'><input type=hidden name=statpress_action value=search>
   </form><br>
 <?php
           if (isset($_GET['searchsubmit']))
@@ -1673,6 +1673,7 @@ function iri_StatPress_extractfeedreq($url)
       {
           global $wpdb;
           $table_name = $wpdb->prefix . "statpress";
+          
           if (strpos(strtolower($body), "%visits%") !== false)
           {
               $qry = $wpdb->get_results("SELECT count(DISTINCT(ip)) as pageview FROM $table_name WHERE date = '" . gmdate("Ymd", current_time('timestamp')) . "' and spider='' and feed='';");
@@ -1725,17 +1726,17 @@ function iri_StatPress_extractfeedreq($url)
           }
           if (strpos(strtolower($body), "%toppost%") !== false)
           {
-              $qry = $wpdb->get_results("SELECT urlrequested,count(*) as totale FROM wp_statpress WHERE spider='' AND feed='' AND urlrequested LIKE '%p=%' GROUP BY urlrequested ORDER BY totale DESC LIMIT 1;");
+              $qry = $wpdb->get_results("SELECT urlrequested,count(*) as totale FROM $table_name WHERE spider='' AND feed='' AND urlrequested LIKE '%p=%' GROUP BY urlrequested ORDER BY totale DESC LIMIT 1;");
               $body = str_replace("%toppost%", iri_StatPress_Decode($qry[0]->urlrequested), $body);
           }
           if (strpos(strtolower($body), "%topbrowser%") !== false)
           {
-              $qry = $wpdb->get_results("SELECT browser,count(*) as totale FROM wp_statpress WHERE spider='' AND feed='' GROUP BY browser ORDER BY totale DESC LIMIT 1;");
+              $qry = $wpdb->get_results("SELECT browser,count(*) as totale FROM $table_name WHERE spider='' AND feed='' GROUP BY browser ORDER BY totale DESC LIMIT 1;");
               $body = str_replace("%topbrowser%", iri_StatPress_Decode($qry[0]->browser), $body);
           }
           if (strpos(strtolower($body), "%topos%") !== false)
           {
-              $qry = $wpdb->get_results("SELECT os,count(*) as totale FROM wp_statpress WHERE spider='' AND feed='' GROUP BY os ORDER BY totale DESC LIMIT 1;");
+              $qry = $wpdb->get_results("SELECT os,count(*) as totale FROM $table_name WHERE spider='' AND feed='' GROUP BY os ORDER BY totale DESC LIMIT 1;");
               $body = str_replace("%topos%", iri_StatPress_Decode($qry[0]->os), $body);
           }
           return $body;
@@ -1747,7 +1748,7 @@ function iri_StatPress_extractfeedreq($url)
           global $wpdb;
           $res = "\n<ul>\n";
           $table_name = $wpdb->prefix . "statpress";
-          $qry = $wpdb->get_results("SELECT urlrequested,count(*) as totale FROM wp_statpress WHERE spider='' AND feed='' AND urlrequested LIKE '%p=%' GROUP BY urlrequested ORDER BY totale DESC LIMIT $limit;");
+          $qry = $wpdb->get_results("SELECT urlrequested,count(*) as totale FROM $table_name WHERE spider='' AND feed='' AND urlrequested LIKE '%p=%' GROUP BY urlrequested ORDER BY totale DESC LIMIT $limit;");
           foreach ($qry as $rk)
           {
               $res .= "<li><a href='?" . $rk->urlrequested . "'>" . iri_StatPress_Decode($rk->urlrequested) . "</a></li>\n";
