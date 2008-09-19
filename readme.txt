@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.0.2
 Tested up to: 2.6.2
-Stable Tag: 1.4.5
+Stable Tag: 1.4.6
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
@@ -303,3 +303,9 @@ Please visit my <a href="http://blog.matrixagents.org/statpress-reloaded/">blog 
 
 * "Page viewed" links fixed again - hope they still work for the rest.
 * Added %thistotalpages% and %pagestoday% for real.
+
+*Version 1.4.6 (19.09.2008)*
+
+* Declaring this the day of the "page viewed"-link.
+* Added %thistotalpages% for real, real!
+
