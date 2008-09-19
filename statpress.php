@@ -3,7 +3,7 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
    Description: Improved real time stats for your blog
-   Version: 1.4.4
+   Version: 1.4.5
    Author: Manuel Grabowski (previously: Daniele Lippi)
    Author URI: http://blog.matrixagents.org/
    */
@@ -1156,7 +1156,7 @@ document.getElementById(thediv).style.display="none"
       function irigetblogurl()
       {
       	$prsurl = parse_url(get_bloginfo('url'));
-      	return $prsurl['PHP_URL_SCHEME'] . '://' . $prsurl['PHP_URL_HOST'] . ((!permalinksEnabled()) ? "/?" : "" );
+      	return $prsurl['scheme'] . '://' . $prsurl['host'] . ((!permalinksEnabled()) ? "/?" : "" );
       }
       
       // Converte da data us to default format di Wordpress
@@ -1746,6 +1746,12 @@ function iri_StatPress_extractfeedreq($url)
               $qry = $wpdb->get_results("SELECT os,count(*) as totale FROM $table_name WHERE spider='' AND feed='' GROUP BY os ORDER BY totale DESC LIMIT 1;");
               $body = str_replace("%topos%", iri_StatPress_Decode($qry[0]->os), $body);
           }
+          if(strpos(strtolower($body),"%pagestoday%") !== false)
+          {
+      				$qry = $wpdb->get_results("SELECT count(ip) as pageview FROM $table_name WHERE date = '".gmdate("Ymd",current_time('timestamp'))."' and spider='' and feed='';");
+      				$body = str_replace("%pagestoday%", $qry[0]->pageview, $body);
+   				}
+   				
           return $body;
       }
       
