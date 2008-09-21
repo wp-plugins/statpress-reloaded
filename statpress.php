@@ -3,7 +3,7 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
    Description: Improved real time stats for your blog
-   Version: 1.4.6
+   Version: 1.4.7
    Author: Manuel Grabowski (previously: Daniele Lippi)
    Author URI: http://blog.matrixagents.org/
    */
@@ -18,21 +18,22 @@
   
   function iri_add_pages()
   {
-      // Crea/aggiorna tabella se non esiste
+      // Create table if it doesn't exist
       global $wpdb;
-      $table_name = $wpdb->prefix . "statpress";
+      $table_name = $wpdb->prefix . 'statpress';
       if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name)
       {
           iri_StatPress_CreateTable();
       }
+      
       // add submenu
       $mincap = get_option('statpress_mincap');
       if ($mincap == '')
       {
-          $mincap = "level_8";
+          $mincap = 'level_8';
       }
-      // ORIG   add_submenu_page('index.php', 'StatPress', 'StatPress', 8, 'statpress', 'iriStatPress');
-      
+
+
       add_menu_page('StatPress', 'StatPress', $mincap, __FILE__, 'iriStatPress');
       add_submenu_page(__FILE__, __('Overview', 'statpress'), __('Overview', 'statpress'), $mincap, __FILE__, 'iriStatPress');
       add_submenu_page(__FILE__, __('Details', 'statpress'), __('Details', 'statpress'), $mincap, __FILE__ . '&statpress_action=details', 'iriStatPress');
@@ -41,7 +42,7 @@
       add_submenu_page(__FILE__, __('Export', 'statpress'), __('Export', 'statpress'), $mincap, __FILE__ . '&statpress_action=export', 'iriStatPress');
       add_submenu_page(__FILE__, __('Options', 'statpress'), __('Options', 'statpress'), $mincap, __FILE__ . '&statpress_action=options', 'iriStatPress');
       add_submenu_page(__FILE__, __('StatPressUpdate', 'statpress'), __('StatPressUpdate', 'statpress'), $mincap, __FILE__ . '&statpress_action=up', 'iriStatPress');
-      //    add_submenu_page(__FILE__, __('Support','statpress'), __('Support','statpress'), $mincap, 'http://www.irisco.it/forums/forum.php?id=1');
+      //add_submenu_page(__FILE__, __('Support','statpress'), __('Support','statpress'), $mincap, 'http://matrixagents.org/phpBB/viewforum.php?f=3');
   }
   
   function permalinksEnabled()
@@ -272,7 +273,7 @@
           global $wpdb;
           $table_name = $wpdb->prefix . "statpress";
           
-          // Tabella OVERVIEW
+          // OVERVIEW table
           $unique_color = "#114477";
           $web_color = "#3377B6";
           $rss_color = "#f38f36";
@@ -337,7 +338,7 @@
           print "<td>" . $qry_tmonth->visitors . $qry_tmonth->change . "</td>\n";
           
           //TARGET
-          $qry_tmonth->target = round($qry_tmonth->visitors / date("d", current_time('timestamp')) * 30);
+          $qry_tmonth->target = round($qry_tmonth->visitors / date("d", current_time('timestamp')) * date('d', mktime(0, 0, 0, date('m', current_time('timestamp'))+1, 0, date('Y', current_time('timestamp')))));
           if ($qry_lmonth->visitors <> 0)
           {
               $pt = round(100 * ($qry_tmonth->target / $qry_lmonth->visitors) - 100, 1);
@@ -410,7 +411,7 @@
           print "<td>" . $qry_tmonth->pageview . $qry_tmonth->change . "</td>\n";
           
           //TARGET
-          $qry_tmonth->target = round($qry_tmonth->pageview / date("d", current_time('timestamp')) * 30);
+          $qry_tmonth->target = round($qry_tmonth->pageview / date("d", current_time('timestamp')) * date('d', mktime(0, 0, 0, date('m', current_time('timestamp'))+1, 0, date('Y', current_time('timestamp')))));
           if ($qry_lmonth->pageview <> 0)
           {
               $pt = round(100 * ($qry_tmonth->target / $qry_lmonth->pageview) - 100, 1);
@@ -481,7 +482,7 @@
           print "<td>" . $qry_tmonth->spiders . $qry_tmonth->change . "</td>\n";
           
           //TARGET
-          $qry_tmonth->target = round($qry_tmonth->spiders / date("d", current_time('timestamp')) * 30);
+          $qry_tmonth->target = round($qry_tmonth->spiders / date("d", current_time('timestamp')) * date('d', mktime(0, 0, 0, date('m', current_time('timestamp'))+1, 0, date('Y', current_time('timestamp')))));
           if ($qry_lmonth->spiders <> 0)
           {
               $pt = round(100 * ($qry_tmonth->target / $qry_lmonth->spiders) - 100, 1);
@@ -551,7 +552,7 @@
           print "<td>" . $qry_tmonth->feeds . $qry_tmonth->change . "</td>\n";
           
           //TARGET
-          $qry_tmonth->target = round($qry_tmonth->feeds / date("d", current_time('timestamp')) * 30);
+          $qry_tmonth->target = round($qry_tmonth->feeds / date("d", current_time('timestamp')) * date('d', mktime(0, 0, 0, date('m', current_time('timestamp'))+1, 0, date('Y', current_time('timestamp')))));
           if ($qry_lmonth->feeds <> 0)
           {
               $pt = round(100 * ($qry_tmonth->target / $qry_lmonth->feeds) - 100, 1);
@@ -705,7 +706,7 @@
           $qry = $wpdb->get_results("SELECT date,time,referrer,urlrequested,search,searchengine FROM $table_name WHERE search<>'' ORDER BY id DESC $querylimit");
           foreach ($qry as $rk)
           {
-              print "<tr><td>" . irihdate($rk->date) . "</td><td>" . $rk->time . "</td><td><a href='" . $rk->referrer . "'>" . $rk->search . "</a></td><td>" . $rk->searchengine . "</td><td><a href='" . irigetblogurl() . $rk->urlrequested . "'>" . __('page viewed', 'statpress') . "</a></td></tr>\n";
+              print "<tr><td>" . irihdate($rk->date) . "</td><td>" . $rk->time . "</td><td><a href='" . $rk->referrer . "'>" . $rk->search . "</a></td><td>" . $rk->searchengine . "</td><td><a href='" . irigetblogurl() . ((strpos('index.php', $rk->urlrequested) !== FALSE) ? $rk->urlrequested : '') . "'>" . __('page viewed', 'statpress') . "</a></td></tr>\n";
           }
           print "</table></div>";
           
@@ -715,7 +716,7 @@
           $qry = $wpdb->get_results("SELECT date,time,referrer,urlrequested FROM $table_name WHERE ((referrer NOT LIKE '" . get_option('home') . "%') AND (referrer <>'') AND (searchengine='')) ORDER BY id DESC $querylimit");
           foreach ($qry as $rk)
           {
-              print "<tr><td>" . irihdate($rk->date) . "</td><td>" . $rk->time . "</td><td><a href='" . $rk->referrer . "'>" . iri_StatPress_Abbrevia($rk->referrer, 80) . "</a></td><td><a href='" . irigetblogurl() . $rk->urlrequested . "'>" . __('page viewed', 'statpress') . "</a></td></tr>\n";
+              print "<tr><td>" . irihdate($rk->date) . "</td><td>" . $rk->time . "</td><td><a href='" . $rk->referrer . "'>" . iri_StatPress_Abbrevia($rk->referrer, 80) . "</a></td><td><a href='" . irigetblogurl() . ((strpos('index.php', $rk->urlrequested) !== FALSE) ? $rk->urlrequested : '') . "'>" . __('page viewed', 'statpress') . "</a></td></tr>\n";
           }
           print "</table></div>";
           
@@ -856,7 +857,7 @@ document.getElementById(thediv).style.display="none"
               {
                   print "<tr>";
                   print "<td valign='top' width='151'><div><font size='1' color='#3B3B3B'><strong>" . irihdate($details->date) . " " . $details->time . "</strong></font></div></td>";
-                  print "<td><div><a href='" . irigetblogurl() . $details->urlrequested . "' target='_blank'>" . iri_StatPress_Decode($details->urlrequested) . "</a>";
+                  print "<td><div><a href='" . irigetblogurl() . ((strpos('index.php', $details->urlrequested) !== FALSE) ? $details->urlrequested : '') . "' target='_blank'>" . iri_StatPress_Decode($details->urlrequested) . "</a>";
                   if ($details->searchengine != '')
                   {
                       print "<br><small>" . __('arrived from', 'statpress') . " <b>" . $details->searchengine . "</b> " . __('searching', 'statpress') . " <a href='" . $details->referrer . "' target=_blank>" . $details->search . "</a></small>";
@@ -1156,7 +1157,7 @@ document.getElementById(thediv).style.display="none"
       function irigetblogurl()
       {
       	$prsurl = parse_url(get_bloginfo('url'));
-      	return $prsurl['scheme'] . '://' . $prsurl['host'] . $prsurl['path'] . ((!permalinksEnabled()) ? "/?" : "" );
+      	return $prsurl['scheme'] . '://' . $prsurl['host'] . ((!permalinksEnabled()) ? $prsurl['path'] . '/?' : '');
       }
       
       // Converte da data us to default format di Wordpress
@@ -1175,7 +1176,7 @@ document.getElementById(thediv).style.display="none"
               $data_lenght = $fstatus->Data_length;
               $data_rows = $fstatus->Rows;
           }
-          return number_format(($data_lenght / 1024 / 1024), 2, ",", " ") . " Mb ($data_rows records)";
+          return number_format(($data_lenght / 1024 / 1024), 2, ",", " ") . " MB ($data_rows records)";
       }
       
       
@@ -1403,28 +1404,28 @@ document.getElementById(thediv).style.display="none"
           global $wp_db_version;
           $table_name = $wpdb->prefix . "statpress";
           $sql_createtable = "CREATE TABLE " . $table_name . " (
-  id mediumint(9) NOT NULL AUTO_INCREMENT,
-  date text,
-  time text,
-  ip text,
-  urlrequested text,
-  agent text,
-  referrer text,
-  search text,
-  nation text,
-  os text,
-  browser text,
-  searchengine text,
-  spider text,
-  feed text,
-  user text,
-  timestamp text,
+  id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
+  date TINYTEXT,
+  time TINYTEXT,
+  ip TINYTEXT,
+  urlrequested TEXT,
+  agent TEXT,
+  referrer TEXT,
+  search TEXT,
+  nation TINYTEXT,
+  os TINYTEXT,
+  browser TINYTEXT,
+  searchengine TINYTEXT,
+  spider TINYTEXT,
+  feed TINYTEXT,
+  user TINYTEXT,
+  timestamp TINYTEXT,
   UNIQUE KEY id (id)
   );";
           if ($wp_db_version >= 5540)
               $page = 'wp-admin/includes/upgrade.php';
           else
-              $page = 'wp-admin/upgrade' . '-functions.php';
+              $page = 'wp-admin/upgrade-functions.php';
           require_once(ABSPATH . $page);
           dbDelta($sql_createtable);
       }
