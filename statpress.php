@@ -3,7 +3,7 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
    Description: Improved real time stats for your blog
-   Version: 1.4.8
+   Version: 1.4.9
    Author: Manuel Grabowski (previously: Daniele Lippi)
    Author URI: http://blog.matrixagents.org/
    */
@@ -1105,32 +1105,64 @@ document.getElementById(thediv).style.display="none"
       
       function iri_StatPress_Decode($out_url)
       {
-          if ($out_url == '')
-          {
-              $out_url = __('Page', 'statpress') . ": Home";
-          }
-          if (substr($out_url, 0, 4) == "cat=")
-          {
-              $out_url = __('Category', 'statpress') . ": " . get_cat_name(substr($out_url, 4));
-          }
-          if (substr($out_url, 0, 2) == "m=")
-          {
-              $out_url = __('Calendar', 'statpress') . ": " . substr($out_url, 6, 2) . "/" . substr($out_url, 2, 4);
-          }
-          if (substr($out_url, 0, 2) == "s=")
-          {
-              $out_url = __('Search', 'statpress') . ": " . substr($out_url, 2);
-          }
-          if (substr($out_url, 0, 2) == "p=")
-          {
-              $post_id_7 = get_post(substr($out_url, 2), ARRAY_A);
-              $out_url = $post_id_7['post_title'];
-          }
-          if (substr($out_url, 0, 8) == "page_id=")
-          {
-              $post_id_7 = get_page(substr($out_url, 8), ARRAY_A);
-              $out_url = __('Page', 'statpress') . ": " . $post_id_7['post_title'];
-          }
+      	if(!permalinksEnabled())
+      	{
+	          if ($out_url == '')
+	          {
+	              $out_url = __('Page', 'statpress') . ": Home";
+	          }
+	          if (substr($out_url, 0, 4) == "cat=")
+	          {
+	              $out_url = __('Category', 'statpress') . ": " . get_cat_name(substr($out_url, 4));
+	          }
+	          if (substr($out_url, 0, 2) == "m=")
+	          {
+	              $out_url = __('Calendar', 'statpress') . ": " . substr($out_url, 6, 2) . "/" . substr($out_url, 2, 4);
+	          }
+	          if (substr($out_url, 0, 2) == "s=")
+	          {
+	              $out_url = __('Search', 'statpress') . ": " . substr($out_url, 2);
+	          }
+	          if (substr($out_url, 0, 2) == "p=")
+	          {
+	              $post_id_7 = get_post(substr($out_url, 2), ARRAY_A);
+	              $out_url = $post_id_7['post_title'];
+	          }
+	          if (substr($out_url, 0, 8) == "page_id=")
+	          {
+	              $post_id_7 = get_page(substr($out_url, 8), ARRAY_A);
+	              $out_url = __('Page', 'statpress') . ": " . $post_id_7['post_title'];
+	          }
+	        }
+	        else
+	        {
+	        	if ($out_url == '')
+	          {
+	              $out_url = __('Page', 'statpress') . ": Home";
+	          }
+	          else if (substr($out_url, 0, 9) == "category/")
+	          {
+	              $out_url = __('Category', 'statpress') . ": " . get_cat_name(substr($out_url, 9));
+	          }
+	          else if (substr($out_url, 0, 8) == "//") // not working yet
+	          {
+	              //$out_url = __('Calendar', 'statpress') . ": " . substr($out_url, 4, 0) . "/" . substr($out_url, 6, 7);
+	          }
+	          else if (substr($out_url, 0, 2) == "s=")
+	          {
+	              $out_url = __('Search', 'statpress') . ": " . substr($out_url, 2);
+	          }
+	          else if (substr($out_url, 0, 2) == "p=") // not working yet 
+	          {
+	              $post_id_7 = get_post(substr($out_url, 2), ARRAY_A);
+	              $out_url = $post_id_7['post_title'];
+	          }
+	          else if (substr($out_url, 0, 8) == "page_id=") // not working yet
+	          {
+	              $post_id_7 = get_page(substr($out_url, 8), ARRAY_A);
+	              $out_url = __('Page', 'statpress') . ": " . $post_id_7['post_title'];
+	          }
+	        }
           return $out_url;
       }
       
@@ -1170,7 +1202,7 @@ document.getElementById(thediv).style.display="none"
       function iritablesize($table)
       {
           global $wpdb;
-          $res = $wpdb->get_results("SHOW TABLE STATUS LIKE '$table'");
+          $res = $wpdb->get_results("SHOW TABLE STATUS WHERE NAME = '$table'");
           foreach ($res as $fstatus)
           {
               $data_lenght = $fstatus->Data_length;
@@ -1600,11 +1632,10 @@ function iri_StatPress_extractfeedreq($url)
           $wpdb->query("UPDATE $table_name SET feed='RSS2' WHERE urlrequested LIKE '%wp-feed.php%' AND feed='';");
          
           
-          // elim    $wpdb->query("UPDATE $table_name SET feed='Y' WHERE (urlrequested LIKE '%feed=%') or (urlrequested LIKE '%wp-rss%') or (urlrequested LIKE '%wp-rdf%') or (urlrequested LIKE '%wp-commentsrss%') or (urlrequested LIKE '%wp-atom%');");
           print "" . __('done', 'statpress') . "<br>";
           
           // Update OS
-          print "Updating OSes... ";
+          print "Updating OS... ";
           $wpdb->query("UPDATE $table_name SET os = '';");
           $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/os.dat');
           foreach ($lines as $line_num => $os)
@@ -1767,10 +1798,10 @@ function iri_StatPress_extractfeedreq($url)
           global $wpdb;
           $res = "\n<ul>\n";
           $table_name = $wpdb->prefix . "statpress";
-          $qry = $wpdb->get_results("SELECT urlrequested,count(*) as totale FROM $table_name WHERE spider='' AND feed='' AND urlrequested LIKE '%p=%' GROUP BY urlrequested ORDER BY totale DESC LIMIT $limit;");
+          $qry = $wpdb->get_results("SELECT urlrequested,count(*) as totale FROM $table_name WHERE spider='' AND feed='' GROUP BY urlrequested ORDER BY totale DESC LIMIT $limit;");
           foreach ($qry as $rk)
           {
-              $res .= "<li><a href='?" . $rk->urlrequested . "'>" . iri_StatPress_Decode($rk->urlrequested) . "</a></li>\n";
+              $res .= "<li><a href='" . irigetblogurl() . ((strpos($rk->urlrequested, 'index.php') === FALSE) ? $rk->urlrequested : '') . "'>" . iri_StatPress_Decode($rk->urlrequested) . "</a></li>\n";
               if (strtolower($showcounts) == 'checked')
               {
                   $res .= " (" . $rk->totale . ")";

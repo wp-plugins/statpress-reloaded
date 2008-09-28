@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.0.2
 Tested up to: 2.6.2
-Stable Tag: 1.4.8
+Stable Tag: 1.4.9
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
@@ -319,3 +319,9 @@ Please visit my <a href="http://blog.matrixagents.org/statpress-reloaded/">blog 
 *Version 1.4.8 (21.09.2008)*
 
 * There was a problem with strpos in some PHP-versions, now using a more compatible way.
+
+*Version 1.4.9 (21.09.2008)*
+
+* Definitions updated
+* Began fixing the TopPosts Widget - still not working as intended when using Permalinks
+* Table size of Statpress is displaying incorrectly in WP:MU - attempt to fix, not sure if it works.
