@@ -1,10 +1,10 @@
 === Plugin Name ===
-Contributors: matrixagent, danielelippi
+Contributors: matrixagent
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40matrixagents%2eorg&item_name=Dodge%20this%21&no_shipping=1&no_note=1&tax=0&currency_code=EUR&lc=DE&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.0.2
-Tested up to: 2.6.2
-Stable Tag: 1.4.9
+Tested up to: 2.6.3
+Stable Tag: 1.4.10
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
@@ -50,6 +50,7 @@ The widget is customizable. These are the available variables:
 * %topos% - The most used O.S.
 * %thistotalpages%
 * %pagestoday%
+* %latesthits%
 
 Now you could add these values everywhere! StatPress offers a new PHP function *StatPress_Print()*.
 * i.e. StatPress_Print("%totalvisits% total visits.");
@@ -75,7 +76,7 @@ Update from within Wordpress Admin Panel does work, too. But don't forget to run
 
 = Where can I get help? =
 
-Please visit my <a href="http://blog.matrixagents.org/statpress-reloaded/">blog entry about StatPress Reloaded<a/> for information on how to contact me.
+Please visit the <a href="http://matrixagents.org/phpBB/">discussion board<a/>.
 
 
 == Screenshots ==
@@ -325,3 +326,12 @@ Please visit my <a href="http://blog.matrixagents.org/statpress-reloaded/">blog 
 * Definitions updated
 * Began fixing the TopPosts Widget - still not working as intended when using Permalinks
 * Table size of Statpress is displaying incorrectly in WP:MU - attempt to fix, not sure if it works.
+
+*Version 1.4.9 (25.10.2008)*
+
+* Definitions updated
+* New variable: %latesthits% displays the ten last search terms
+* Added option to delete spider visits earlier than other data
+* Fixed some bugs when using UTF-8
+* Fixed bug in "Search"
+* Fixed a problem with the banips.dat

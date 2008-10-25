@@ -3,8 +3,8 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
    Description: Improved real time stats for your blog
-   Version: 1.4.9
-   Author: Manuel Grabowski (previously: Daniele Lippi)
+   Version: 1.4.10
+   Author: Manuel Grabowski
    Author URI: http://blog.matrixagents.org/
    */
   
@@ -35,13 +35,13 @@
 
 
       add_menu_page('StatPress', 'StatPress', $mincap, __FILE__, 'iriStatPress');
-      add_submenu_page(__FILE__, __('Overview', 'statpress'), __('Overview', 'statpress'), $mincap, __FILE__, 'iriStatPress');
-      add_submenu_page(__FILE__, __('Details', 'statpress'), __('Details', 'statpress'), $mincap, __FILE__ . '&statpress_action=details', 'iriStatPress');
-      add_submenu_page(__FILE__, __('Spy', 'statpress'), __('Spy', 'statpress'), $mincap, __FILE__ . '&statpress_action=spy', 'iriStatPress');
-      add_submenu_page(__FILE__, __('Search', 'statpress'), __('Search', 'statpress'), $mincap, __FILE__ . '&statpress_action=search', 'iriStatPress');
-      add_submenu_page(__FILE__, __('Export', 'statpress'), __('Export', 'statpress'), $mincap, __FILE__ . '&statpress_action=export', 'iriStatPress');
-      add_submenu_page(__FILE__, __('Options', 'statpress'), __('Options', 'statpress'), $mincap, __FILE__ . '&statpress_action=options', 'iriStatPress');
-      add_submenu_page(__FILE__, __('StatPressUpdate', 'statpress'), __('StatPressUpdate', 'statpress'), $mincap, __FILE__ . '&statpress_action=up', 'iriStatPress');
+      add_submenu_page(__FILE__, __('Overview', 'statpress'), __('Overview', 'statpress'), $mincap, __FILE__, 'iriStatPressMain');
+      add_submenu_page(__FILE__, __('Details', 'statpress'), __('Details', 'statpress'), $mincap, __FILE__ . '&statpress_action=details', 'iriStatPressDetails');
+      add_submenu_page(__FILE__, __('Spy', 'statpress'), __('Spy', 'statpress'), $mincap, __FILE__ . '&statpress_action=spy', 'iriStatPressSpy');
+      add_submenu_page(__FILE__, __('Search', 'statpress'), __('Search', 'statpress'), $mincap, __FILE__ . '&statpress_action=search', 'iriStatPressSearch');
+      add_submenu_page(__FILE__, __('Export', 'statpress'), __('Export', 'statpress'), $mincap, __FILE__ . '&statpress_action=export', 'iriStatPressExport');
+      add_submenu_page(__FILE__, __('Options', 'statpress'), __('Options', 'statpress'), $mincap, __FILE__ . '&statpress_action=options', 'iriStatPressOptions');
+      add_submenu_page(__FILE__, __('StatPressUpdate', 'statpress'), __('StatPressUpdate', 'statpress'), $mincap, __FILE__ . '&statpress_action=up', 'iriStatPressUpdate');
       //add_submenu_page(__FILE__, __('Support','statpress'), __('Support','statpress'), $mincap, 'http://matrixagents.org/phpBB/viewforum.php?f=3');
   }
   
@@ -103,6 +103,7 @@
           update_option('statpress_daysinoverviewgraph', $_POST['statpress_daysinoverviewgraph']);
           update_option('statpress_mincap', $_POST['statpress_mincap']);
           update_option('statpress_donotcollectspider', $_POST['statpress_donotcollectspider']);
+          update_option('statpress_autodelete_spider', $_POST['statpress_autodelete_spider']);
           
           // update database too
           iri_StatPress_CreateTable();
@@ -153,6 +154,15 @@
 ?>>1 <?php
           _e('year', 'statpress');
 ?></option>
+  </select></td></tr>
+  
+  <tr><td><?php _e('Automatically delete spider visits older than','statpress'); ?>
+  <select name="statpress_autodelete_spider">
+  <option value="" <?php if(get_option('statpress_autodelete_spider') =='' ) print "selected"; ?>><?php _e('Never delete!','statpress'); ?></option>
+  <option value="1 day" <?php if(get_option('statpress_autodelete_spider') == "1 day") print "selected"; ?>>1 <?php _e('day','statpress'); ?></option>
+  <option value="1 week" <?php if(get_option('statpress_autodelete_spider') == "1 week") print "selected"; ?>>1 <?php _e('week','statpress'); ?></option>
+  <option value="1 month" <?php if(get_option('statpress_autodelete_spider') == "1 month") print "selected"; ?>>1 <?php _e('month','statpress'); ?></option>
+  <option value="1 year" <?php if(get_option('statpress_autodelete_spider') == "1 year") print "selected"; ?>>1 <?php _e('year','statpress'); ?></option>
   </select></td></tr>
 
   <tr><td><?php
@@ -258,8 +268,8 @@
           header('Content-Description: File Transfer');
           header("Content-Disposition: attachment; filename=$filename");
           header('Content-Type: text/plain charset=' . get_option('blog_charset'), true);
-          $qry = $wpdb->get_results("SELECT * FROM $table_name WHERE date>='" . (date("Ymd", strtotime(substr($_GET['from'], 0, 8)))) . "' AND date<='" . (date("Ymd", strtotime(substr($_GET['to'], 0, 8)))) . "';");
-          $del = substr($_GET['del'], 0, 1);
+          $qry = $wpdb->get_results("SELECT * FROM $table_name WHERE date>='" . (date("Ymd", strtotime(mb_substr($_GET['from'], 0, 8)))) . "' AND date<='" . (date("Ymd", strtotime(mb_substr($_GET['to'], 0, 8)))) . "';");
+          $del = mb_substr($_GET['del'], 0, 1);
           print "date" . $del . "time" . $del . "ip" . $del . "urlrequested" . $del . "agent" . $del . "referrer" . $del . "search" . $del . "nation" . $del . "os" . $del . "browser" . $del . "searchengine" . $del . "spider" . $del . "feed\n";
           foreach ($qry as $rk)
           {
@@ -282,8 +292,8 @@
           $thismonth = gmdate('Ym', current_time('timestamp'));
           $yesterday = gmdate('Ymd', current_time('timestamp') - 86400);
           $today = gmdate('Ymd', current_time('timestamp'));
-          $tlm[0] = substr($lastmonth, 0, 4);
-          $tlm[1] = substr($lastmonth, 4, 2);
+          $tlm[0] = mb_substr($lastmonth, 0, 4);
+          $tlm[1] = mb_substr($lastmonth, 4, 2);
           
           print "<div class='wrap'><h2>" . __('Overview', 'statpress') . "</h2>";
           print "<table class='widefat'><thead><tr>
@@ -965,7 +975,7 @@ document.getElementById(thediv).style.display="none"
     </td>
   </tr>    
   </table>  
-  <input type=hidden name=page value='./statpress.php'><input type=hidden name=statpress_action value=search>
+  <input type=hidden name=page value='statpress-reloaded/statpress.php'><input type=hidden name=statpress_action value=search>
   </form><br>
 <?php
           if (isset($_GET['searchsubmit']))
@@ -1084,7 +1094,7 @@ document.getElementById(thediv).style.display="none"
           {
               $res = "...";
           }
-          return substr($s, 0, $c) . $res;
+          return mb_substr($s, 0, $c) . $res;
       }
       
       function iri_StatPress_Where($ip)
@@ -1111,26 +1121,26 @@ document.getElementById(thediv).style.display="none"
 	          {
 	              $out_url = __('Page', 'statpress') . ": Home";
 	          }
-	          if (substr($out_url, 0, 4) == "cat=")
+	          if (mb_substr($out_url, 0, 4) == "cat=")
 	          {
-	              $out_url = __('Category', 'statpress') . ": " . get_cat_name(substr($out_url, 4));
+	              $out_url = __('Category', 'statpress') . ": " . get_cat_name(mb_substr($out_url, 4));
 	          }
-	          if (substr($out_url, 0, 2) == "m=")
+	          if (mb_substr($out_url, 0, 2) == "m=")
 	          {
-	              $out_url = __('Calendar', 'statpress') . ": " . substr($out_url, 6, 2) . "/" . substr($out_url, 2, 4);
+	              $out_url = __('Calendar', 'statpress') . ": " . mb_substr($out_url, 6, 2) . "/" . mb_substr($out_url, 2, 4);
 	          }
-	          if (substr($out_url, 0, 2) == "s=")
+	          if (mb_substr($out_url, 0, 2) == "s=")
 	          {
-	              $out_url = __('Search', 'statpress') . ": " . substr($out_url, 2);
+	              $out_url = __('Search', 'statpress') . ": " . mb_substr($out_url, 2);
 	          }
-	          if (substr($out_url, 0, 2) == "p=")
+	          if (mb_substr($out_url, 0, 2) == "p=")
 	          {
-	              $post_id_7 = get_post(substr($out_url, 2), ARRAY_A);
+	              $post_id_7 = get_post(mb_substr($out_url, 2), ARRAY_A);
 	              $out_url = $post_id_7['post_title'];
 	          }
-	          if (substr($out_url, 0, 8) == "page_id=")
+	          if (mb_substr($out_url, 0, 8) == "page_id=")
 	          {
-	              $post_id_7 = get_page(substr($out_url, 8), ARRAY_A);
+	              $post_id_7 = get_page(mb_substr($out_url, 8), ARRAY_A);
 	              $out_url = __('Page', 'statpress') . ": " . $post_id_7['post_title'];
 	          }
 	        }
@@ -1140,26 +1150,26 @@ document.getElementById(thediv).style.display="none"
 	          {
 	              $out_url = __('Page', 'statpress') . ": Home";
 	          }
-	          else if (substr($out_url, 0, 9) == "category/")
+	          else if (mb_substr($out_url, 0, 9) == "category/")
 	          {
-	              $out_url = __('Category', 'statpress') . ": " . get_cat_name(substr($out_url, 9));
+	              $out_url = __('Category', 'statpress') . ": " . get_cat_name(mb_substr($out_url, 9));
 	          }
-	          else if (substr($out_url, 0, 8) == "//") // not working yet
+	          else if (mb_substr($out_url, 0, 8) == "//") // not working yet
 	          {
-	              //$out_url = __('Calendar', 'statpress') . ": " . substr($out_url, 4, 0) . "/" . substr($out_url, 6, 7);
+	              //$out_url = __('Calendar', 'statpress') . ": " . mb_substr($out_url, 4, 0) . "/" . mb_substr($out_url, 6, 7);
 	          }
-	          else if (substr($out_url, 0, 2) == "s=")
+	          else if (mb_substr($out_url, 0, 2) == "s=")
 	          {
-	              $out_url = __('Search', 'statpress') . ": " . substr($out_url, 2);
+	              $out_url = __('Search', 'statpress') . ": " . mb_substr($out_url, 2);
 	          }
-	          else if (substr($out_url, 0, 2) == "p=") // not working yet 
+	          else if (mb_substr($out_url, 0, 2) == "p=") // not working yet 
 	          {
-	              $post_id_7 = get_post(substr($out_url, 2), ARRAY_A);
+	              $post_id_7 = get_post(mb_substr($out_url, 2), ARRAY_A);
 	              $out_url = $post_id_7['post_title'];
 	          }
-	          else if (substr($out_url, 0, 8) == "page_id=") // not working yet
+	          else if (mb_substr($out_url, 0, 8) == "page_id=") // not working yet
 	          {
-	              $post_id_7 = get_page(substr($out_url, 8), ARRAY_A);
+	              $post_id_7 = get_page(mb_substr($out_url, 8), ARRAY_A);
 	              $out_url = __('Page', 'statpress') . ": " . $post_id_7['post_title'];
 	          }
 	        }
@@ -1175,9 +1185,9 @@ document.getElementById(thediv).style.display="none"
               // SEO problem!
               $urlRequested = (isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : '');
           }
-          if (substr($urlRequested, 0, 2) == '/?')
+          if (mb_substr($urlRequested, 0, 2) == '/?')
           {
-              $urlRequested = substr($urlRequested, 2);
+              $urlRequested = mb_substr($urlRequested, 2);
           }
           if ($urlRequested == '/')
           {
@@ -1195,7 +1205,7 @@ document.getElementById(thediv).style.display="none"
       // Converte da data us to default format di Wordpress
       function irihdate($dt = "00000000")
       {
-          return mysql2date(get_option('date_format'), substr($dt, 0, 4) . "-" . substr($dt, 4, 2) . "-" . substr($dt, 6, 2));
+          return mysql2date(get_option('date_format'), mb_substr($dt, 0, 4) . "-" . mb_substr($dt, 4, 2) . "-" . mb_substr($dt, 6, 2));
       }
       
       
@@ -1261,9 +1271,9 @@ document.getElementById(thediv).style.display="none"
                   {
                       $rk->$fld = iri_StatPress_Decode($rk->$fld);
                   }
-                  //      $chl.=urlencode(substr($rk->$fld,0,50))."|";
+                  //      $chl.=urlencode(mb_substr($rk->$fld,0,50))."|";
                   //      $chd.=($tdwidth*$pc/100)."|";
-                  print "<tr><td style='width:400px;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>" . substr($rk->$fld, 0, 50);
+                  print "<tr><td style='width:400px;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>" . mb_substr($rk->$fld, 0, 50);
                   if (strlen("$rk->fld") >= 50)
                   {
                       print "...";
@@ -1277,8 +1287,8 @@ document.getElementById(thediv).style.display="none"
               }
           }
           print "</table>\n";
-          //  $chl=substr($chl,0,strlen($chl)-1);
-          //  $chd=substr($chd,0,strlen($chd)-1);
+          //  $chl=mb_substr($chl,0,strlen($chl)-1);
+          //  $chd=mb_substr($chd,0,strlen($chd)-1);
           //  print "<img src=http://chart.apis.google.com/chart?cht=p3&chd=".($chd)."&chs=400x200&chl=".($chl)."&chco=1B75DF,92BF23>\n";
           print "</div>\n";
       }
@@ -1294,7 +1304,7 @@ document.getElementById(thediv).style.display="none"
           }
           else
           {
-              return substr(strrchr($host, "."), 1);
+              return mb_substr(strrchr($host, "."), 1);
           }
       }
       
@@ -1358,7 +1368,7 @@ document.getElementById(thediv).style.display="none"
           $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/banips.dat');
           foreach ($lines as $line_num => $banip)
           {
-              if (strpos($arg, rtrim($banip, "\n")) === false)
+              if (@strpos($arg, rtrim($banip, "\n")) === false)
                   continue;
               // riconosciuto, da scartare
               return '';
@@ -1563,6 +1573,11 @@ function iri_StatPress_extractfeedreq($url)
               list($searchengine, $search_phrase) = explode("|", iriGetSE($referrer));
           }
           // Auto-delete visits if...
+          if (get_option('statpress_autodelete_spider') != '') 
+          {
+              $t = gmdate("Ymd", strtotime('-' . get_option('statpress_autodelete_spider')));
+              $results = $wpdb->query("DELETE FROM " . $table_name . " WHERE date < '" . $t . "' AND spider <> ''");
+          }
           if (get_option('statpress_autodelete') != '')
           {
               $t = gmdate("Ymd", strtotime('-' . get_option('statpress_autodelete')));
@@ -1784,10 +1799,21 @@ function iri_StatPress_extractfeedreq($url)
       				$body = str_replace("%pagestoday%", $qry[0]->pageview, $body);
    				}
    				
-   				if(strpos(strtolower($body),"%thistotalpages%") !== FALSE) {
+   				if(strpos(strtolower($body),"%thistotalpages%") !== FALSE)
+   				{
       				$qry = $wpdb->get_results("SELECT count(ip) as pageview FROM $table_name WHERE spider='' and feed='';");
       				$body = str_replace("%thistotalpages%", $qry[0]->pageview, $body);
-   			}
+      		}
+      		
+      		 if (strpos(strtolower($body), "%latesthits%") !== false)
+						{
+							$qry = $wpdb->get_results("SELECT search FROM $table_name WHERE search <> '' ORDER BY id DESC LIMIT 10");
+							$body = str_replace("%latesthits%", $qry[0]->search, $body);
+							for ($counter = 0; $counter < 10; $counter += 1)
+							{
+								$body .= "<br>". $qry[$counter]->search;
+							}
+						}
    				
           return $body;
       }
