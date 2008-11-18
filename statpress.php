@@ -3,7 +3,7 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
    Description: Improved real time stats for your blog
-   Version: 1.4.10
+   Version: 1.4.11
    Author: Manuel Grabowski
    Author URI: http://blog.matrixagents.org/
    */
@@ -326,7 +326,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider=''
-    AND date LIKE '" . $lastmonth . "%'
+    AND date LIKE '" . mysql_real_escape_string($lastmonth) . "%'
   ");
           print "<td>" . $qry_lmonth->visitors . "</td>\n";
           
@@ -336,7 +336,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider=''
-    AND date LIKE '" . $thismonth . "%'
+    AND date LIKE '" . mysql_real_escape_string($thismonth) . "%'
   ");
           if ($qry_lmonth->visitors <> 0)
           {
@@ -364,7 +364,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider=''
-    AND date = '$yesterday'
+    AND date = '" . mysql_real_escape_string($yesterday) . "'
   ");
           print "<td>" . $qry_y->visitors . "</td>\n";
           
@@ -374,7 +374,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider=''
-    AND date = '$today'
+    AND date = '" . mysql_real_escape_string($today) . "'
   ");
           print "<td>" . $qry_t->visitors . "</td>\n";
           print "</tr>";
@@ -399,7 +399,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider=''
-    AND date LIKE '" . $lastmonth . "%'
+    AND date LIKE '" . mysql_real_escape_string($lastmonth) . "%'
   ");
           print "<td>" . $qry_lmonth->pageview . "</td>\n";
           
@@ -409,7 +409,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider=''
-    AND date LIKE '" . $thismonth . "%'
+    AND date LIKE '" . mysql_real_escape_string($thismonth) . "%'
   ");
           if ($qry_lmonth->pageview <> 0)
           {
@@ -437,7 +437,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider=''
-    AND date = '$yesterday'
+    AND date = '" . mysql_real_escape_string($yesterday) . "'
   ");
           print "<td>" . $qry_y->pageview . "</td>\n";
           
@@ -447,7 +447,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider=''
-    AND date = '$today'
+    AND date = '" . mysql_real_escape_string($today) . "'
   ");
           print "<td>" . $qry_t->pageview . "</td>\n";
           print "</tr>";
@@ -469,7 +469,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider<>''
-    AND date LIKE '" . $lastmonth . "%'
+    AND date LIKE '" . mysql_real_escape_string($lastmonth) . "%'
   ");
           print "<td>" . $qry_lmonth->spiders . "</td>\n";
           
@@ -480,7 +480,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider<>''
-    AND date LIKE '" . $thismonth . "%'
+    AND date LIKE '" . mysql_real_escape_string($thismonth) . "%'
   ");
           if ($qry_lmonth->spiders <> 0)
           {
@@ -508,7 +508,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider<>''
-    AND date = '$yesterday'
+    AND date = '" . mysql_real_escape_string($yesterday) . "'
   ");
           print "<td>" . $qry_y->spiders . "</td>\n";
           
@@ -518,7 +518,7 @@
     FROM $table_name
     WHERE feed=''
     AND spider<>''
-    AND date = '$today'
+    AND date = '" . mysql_real_escape_string($today) . "'
   ");
           print "<td>" . $qry_t->spiders . "</td>\n";
           print "</tr>";
@@ -540,7 +540,7 @@
     FROM $table_name
     WHERE feed<>''
     AND spider=''
-    AND date LIKE '" . $lastmonth . "%'
+    AND date LIKE '" . mysql_real_escape_string($lastmonth) . "%'
   ");
           print "<td>" . $qry_lmonth->feeds . "</td>\n";
           
@@ -550,7 +550,7 @@
     FROM $table_name
     WHERE feed<>''
     AND spider=''
-    AND date LIKE '" . $thismonth . "%'
+    AND date LIKE '" . mysql_real_escape_string($thismonth) . "%'
   ");
           if ($qry_lmonth->feeds <> 0)
           {
@@ -577,7 +577,7 @@
     FROM $table_name
     WHERE feed<>''
     AND spider=''
-    AND date = '" . $yesterday . "'
+    AND date = '" . mysql_real_escape_string($yesterday) . "'
   ");
           print "<td>" . $qry_y->feeds . "</td>\n";
           
@@ -586,7 +586,7 @@
     FROM $table_name
     WHERE feed<>''
     AND spider=''
-    AND date = '$today'
+    AND date = '" . mysql_real_escape_string($today) . "'
   ");
           print "<td>" . $qry_t->feeds . "</td>\n";
           
@@ -687,7 +687,7 @@
           
           
           
-          $querylimit = "LIMIT 10";
+          $querylimit = "LIMIT 20";
           
           // Tabella Last hits
           print "<div class='wrap'><h2>" . __('Last hits', 'statpress') . "</h2><table class='widefat'><thead><tr><th scope='col'>" . __('Date', 'statpress') . "</th><th scope='col'>" . __('Time', 'statpress') . "</th><th scope='col'>IP</th><th scope='col'>" . __('Domain', 'statpress') . "</th><th scope='col'>" . __('Page', 'statpress') . "</th><th scope='col'>OS</th><th scope='col'>Browser</th><th scope='col'>Feed</th></tr></thead>";
@@ -853,7 +853,7 @@ document.getElementById(thediv).style.display="none"
               print "<span style='color:#006dca;cursor:pointer;border-bottom:1px dotted #AFD5F9;font-size:8pt;' onClick=ttogle('" . $rk->ip . "');>" . __('more info', 'statpress') . "</span></div>";
               print "<div id='" . $rk->ip . "' name='" . $rk->ip . "'>" . $rk->os . ", " . $rk->browser;
               //    print "<br><iframe style='overflow:hide;border:0px;width:100%;height:15px;font-family:helvetica;paddng:0;' scrolling='no' marginwidth=0 marginheight=0 src=http://showip.fakap.net/txt/".$rk->ip."></iframe>";
-              print "<br><iframe style='overflow:hide;border:0px;width:100%;height:26px;font-family:helvetica;paddng:0;' scrolling='no' marginwidth=0 marginheight=0 src=http://api.hostip.info/get_html.php?ip=" . $rk->ip . "></iframe>";
+              print "<br><iframe style='overflow:hide;border:0px;width:100%;height:30px;font-family:helvetica;paddng:0;' scrolling='no' marginwidth=0 marginheight=0 src=http://api.hostip.info/get_html.php?ip=" . $rk->ip . "></iframe>";
               if ($rk->nation)
               {
                   print "<br><small>" . gethostbyaddr($rk->ip) . "</small>";
@@ -1006,7 +1006,7 @@ document.getElementById(thediv).style.display="none"
               {
                   if (($_GET["what$i"] != '') && ($_GET["where$i"] != ''))
                   {
-                      $where .= " AND " . $_GET["where$i"] . " LIKE '%" . $_GET["what$i"] . "%'";
+                      $where .= " AND " . $_GET["where$i"] . " LIKE '%" . mysql_real_escape_string($_GET["what$i"]) . "%'";
                   }
               }
               // ORDER BY
@@ -1589,7 +1589,8 @@ function iri_StatPress_extractfeedreq($url)
               {
                   iri_StatPress_CreateTable();
               }
-              $insert = "INSERT INTO " . $table_name . " (date, time, ip, urlrequested, agent, referrer, search,nation,os,browser,searchengine,spider,feed,user,timestamp) " . "VALUES ('$vdate','$vtime','$ipAddress','$urlRequested','" . addslashes(strip_tags($userAgent)) . "','$referrer','" . addslashes(strip_tags($search_phrase)) . "','" . iriDomain($ipAddress) . "','$os','$browser','$searchengine','$spider','$feed','$userdata->user_login','$timestamp')";
+              
+              $insert = "INSERT INTO " . $table_name . " (date, time, ip, urlrequested, agent, referrer, search,nation,os,browser,searchengine,spider,feed,user,timestamp) " . "VALUES ('$vdate','$vtime','$ipAddress','" . mysql_real_escape_string($urlRequested) . "','" . mysql_real_escape_string(strip_tags($userAgent)) . "','" . mysql_real_escape_string($referrer) . "','" . mysql_real_escape_string(strip_tags($search_phrase)) . "','" . iriDomain($ipAddress) . "','" . mysql_real_escape_string($os) . "','" . mysql_real_escape_string($browser) . "','$searchengine','$spider','$feed','$userdata->user_login','$timestamp')";
               $results = $wpdb->query($insert);
           }
       }
@@ -1740,7 +1741,7 @@ function iri_StatPress_extractfeedreq($url)
           }
           if (strpos(strtolower($body), "%thistotalvisits%") !== false)
           {
-              $qry = $wpdb->get_results("SELECT count(DISTINCT(ip)) as pageview FROM $table_name WHERE spider='' and feed='' AND urlrequested='" . iri_StatPress_URL() . "';");
+              $qry = $wpdb->get_results("SELECT count(DISTINCT(ip)) as pageview FROM $table_name WHERE spider='' and feed='' AND urlrequested='" . mysql_real_escape_string(iri_StatPress_URL()) . "';");
               $body = str_replace("%thistotalvisits%", $qry[0]->pageview, $body);
           }
           if (strpos(strtolower($body), "%since%") !== false)

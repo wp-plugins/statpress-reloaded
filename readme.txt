@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.0.2
 Tested up to: 2.6.3
-Stable Tag: 1.4.10
+Stable Tag: 1.4.11
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
@@ -327,7 +327,7 @@ Please visit the <a href="http://matrixagents.org/phpBB/">discussion board<a/>.
 * Began fixing the TopPosts Widget - still not working as intended when using Permalinks
 * Table size of Statpress is displaying incorrectly in WP:MU - attempt to fix, not sure if it works.
 
-*Version 1.4.9 (25.10.2008)*
+*Version 1.4.10 (25.10.2008)*
 
 * Definitions updated
 * New variable: %latesthits% displays the ten last search terms
@@ -335,3 +335,7 @@ Please visit the <a href="http://matrixagents.org/phpBB/">discussion board<a/>.
 * Fixed some bugs when using UTF-8
 * Fixed bug in "Search"
 * Fixed a problem with the banips.dat
+
+*Version 1.4.11 (25.10.2008)*
+
+* Sorry, no new features or anything, just some severe security fixes. Next version with some improvements should follow before december - thanks for all your support!
