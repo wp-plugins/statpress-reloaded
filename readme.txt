@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.5
 Tested up to: 2.7
-Stable Tag: 1.5
+Stable Tag: 1.5.1
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
@@ -344,7 +344,7 @@ Please visit the <a href="http://matrixagents.org/phpBB/">discussion board<a/>.
 *Version 1.5 (17.12.2008)*
 
 * 2.7 compability update
-* Every entry gets checked against the database from http://www.projecthoneypot.org/ - there will be options to auto-delete/ignore entries with certain criteria in the future. For now, you could already manually delete entries with a score higher than x directly via mySQL.
+* If you have http:BL installed, every entry gets checked against the database from http://www.projecthoneypot.org/ - there will be options to auto-delete/ignore entries with certain criteria in the future. For now, you could already manually delete entries with a score higher than x directly via mySQL.
 * Updated Spiders and Definitions
 * You can now keep custom banned IPs, so they are not overwritten on each update. You need to create "statpress-reloaded-custom" in the plugins directory (it cannot be inside StatPress' own directory as this gets completely removed during an update!) and put your own "banips.dat" in there.
 * This also works for the "spiders.dat" file.
@@ -353,3 +353,7 @@ Please visit the <a href="http://matrixagents.org/phpBB/">discussion board<a/>.
 * In the overview section, the table of "Last spiders" now also tells you what page the spider was indexing.
 * <b>Big thanks for all the help and participation in the support forums! Most of the new features come from users, I just put them together. I'm thrilled to see the development of this plugin!</b>
 * This will, if no major problems or security leaks occur, hopefully be the last release of the 1.x-branch so far. StatPress Reloaded 2.x will be a nearly 100% rewrite and still take quite some time to finish. But it will be significantly faster and a lot easier to maintain for me.
+
+*Version 1.5.1 (17.12.2008)*
+
+* I wonder if I'll ever manage to release a bigger update without some remaining errors. Thanks for your quick reports, hopefully this is a stable release now for real.
