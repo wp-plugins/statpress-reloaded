@@ -3,13 +3,14 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
    Description: Improved real time stats for your blog
-   Version: 1.4.11
+   Version: 1.5
    Author: Manuel Grabowski
    Author URI: http://blog.matrixagents.org/
    */
   
-  $_STATPRESS['version'] = '1.4';
+  $_STATPRESS['version'] = '1.5';
   $_STATPRESS['feedtype'] = '';
+  
   
   if ($_GET['statpress_action'] == 'exportnow')
   {
@@ -35,12 +36,13 @@
 
 
       add_menu_page('StatPress', 'StatPress', $mincap, __FILE__, 'iriStatPress');
-      add_submenu_page(__FILE__, __('Overview', 'statpress'), __('Overview', 'statpress'), $mincap, __FILE__, 'iriStatPressMain');
+      add_submenu_page(__FILE__, __('Overview', 'statpress'), __('Overview', 'statpress'), $mincap, __FILE__ . '&statpress_action=overview', 'iriStatPressMain');
       add_submenu_page(__FILE__, __('Details', 'statpress'), __('Details', 'statpress'), $mincap, __FILE__ . '&statpress_action=details', 'iriStatPressDetails');
       add_submenu_page(__FILE__, __('Spy', 'statpress'), __('Spy', 'statpress'), $mincap, __FILE__ . '&statpress_action=spy', 'iriStatPressSpy');
       add_submenu_page(__FILE__, __('Search', 'statpress'), __('Search', 'statpress'), $mincap, __FILE__ . '&statpress_action=search', 'iriStatPressSearch');
       add_submenu_page(__FILE__, __('Export', 'statpress'), __('Export', 'statpress'), $mincap, __FILE__ . '&statpress_action=export', 'iriStatPressExport');
       add_submenu_page(__FILE__, __('Options', 'statpress'), __('Options', 'statpress'), $mincap, __FILE__ . '&statpress_action=options', 'iriStatPressOptions');
+      add_submenu_page(__FILE__, __('User Agents', 'statpress'), __('User Agents', 'statpress'), $mincap, __FILE__ . '&statpress_action=agents', 'iriStatPressAgents');
       add_submenu_page(__FILE__, __('StatPressUpdate', 'statpress'), __('StatPressUpdate', 'statpress'), $mincap, __FILE__ . '&statpress_action=up', 'iriStatPressUpdate');
       //add_submenu_page(__FILE__, __('Support','statpress'), __('Support','statpress'), $mincap, 'http://matrixagents.org/phpBB/viewforum.php?f=3');
   }
@@ -60,6 +62,17 @@
       }
   }
   
+  function my_substr($str, $x, $y)
+  {
+ 	if(function_exists('mb_substr'))
+ 	{
+ 		return mb_substr($str, $x, $y);
+ 	}
+ 	else
+ 	{
+ 		return substr($str, $x, $y);
+ 	}
+  }
   
   
   function iriStatPress()
@@ -88,7 +101,15 @@
       {
           iriStatPressOptions();
       }
-      elseif (1)
+      elseif ($_GET['statpress_action'] == 'overview')
+      {
+          iriStatPressMain();
+      }
+      elseif ($_GET['statpress_action'] == 'agents')
+      {
+          iriStatPressAgents();
+      }
+      else
       {
           iriStatPressMain();
       }
@@ -268,8 +289,8 @@
           header('Content-Description: File Transfer');
           header("Content-Disposition: attachment; filename=$filename");
           header('Content-Type: text/plain charset=' . get_option('blog_charset'), true);
-          $qry = $wpdb->get_results("SELECT * FROM $table_name WHERE date>='" . (date("Ymd", strtotime(mb_substr($_GET['from'], 0, 8)))) . "' AND date<='" . (date("Ymd", strtotime(mb_substr($_GET['to'], 0, 8)))) . "';");
-          $del = mb_substr($_GET['del'], 0, 1);
+          $qry = $wpdb->get_results("SELECT * FROM $table_name WHERE date>='" . (date("Ymd", strtotime(my_substr($_GET['from'], 0, 8)))) . "' AND date<='" . (date("Ymd", strtotime(my_substr($_GET['to'], 0, 8)))) . "';");
+          $del = my_substr($_GET['del'], 0, 1);
           print "date" . $del . "time" . $del . "ip" . $del . "urlrequested" . $del . "agent" . $del . "referrer" . $del . "search" . $del . "nation" . $del . "os" . $del . "browser" . $del . "searchengine" . $del . "spider" . $del . "feed\n";
           foreach ($qry as $rk)
           {
@@ -292,8 +313,8 @@
           $thismonth = gmdate('Ym', current_time('timestamp'));
           $yesterday = gmdate('Ymd', current_time('timestamp') - 86400);
           $today = gmdate('Ymd', current_time('timestamp'));
-          $tlm[0] = mb_substr($lastmonth, 0, 4);
-          $tlm[1] = mb_substr($lastmonth, 4, 2);
+          $tlm[0] = my_substr($lastmonth, 0, 4);
+          $tlm[1] = my_substr($lastmonth, 4, 2);
           
           print "<div class='wrap'><h2>" . __('Overview', 'statpress') . "</h2>";
           print "<table class='widefat'><thead><tr>
@@ -690,7 +711,7 @@
           $querylimit = "LIMIT 20";
           
           // Tabella Last hits
-          print "<div class='wrap'><h2>" . __('Last hits', 'statpress') . "</h2><table class='widefat'><thead><tr><th scope='col'>" . __('Date', 'statpress') . "</th><th scope='col'>" . __('Time', 'statpress') . "</th><th scope='col'>IP</th><th scope='col'>" . __('Domain', 'statpress') . "</th><th scope='col'>" . __('Page', 'statpress') . "</th><th scope='col'>OS</th><th scope='col'>Browser</th><th scope='col'>Feed</th></tr></thead>";
+          print "<div class='wrap'><h2>" . __('Last hits', 'statpress') . "</h2><table class='widefat'><thead><tr><th scope='col'>" . __('Date', 'statpress') . "</th><th scope='col'>" . __('Time', 'statpress') . "</th><th scope='col'>IP</th><th scope='col'>Threat</th><th scope='col'>" . __('Domain', 'statpress') . "</th><th scope='col'>" . __('Page', 'statpress') . "</th><th scope='col'>OS</th><th scope='col'>Browser</th><th scope='col'>Feed</th></tr></thead>";
           print "<tbody id='the-list'>";
           
           $fivesdrafts = $wpdb->get_results("SELECT * FROM $table_name WHERE (os<>'' OR feed<>'') order by id DESC $querylimit");
@@ -700,6 +721,22 @@
               print "<td>" . irihdate($fivesdraft->date) . "</td>";
               print "<td>" . $fivesdraft->time . "</td>";
               print "<td>" . $fivesdraft->ip . "</td>";
+              print "<td>" . $fivesdraft->threat_score;
+              if ($fivesdraft->threat_score > 0)
+              {
+                  print "/";
+                  if ($fivesdraft->threat_type == 0)
+                      print "Sp"; // Spider
+                  else
+                  {
+                      if (($fivesdraft->threat_type & 1) == 1)
+                          print "S"; // Suspicious
+                      if (($fivesdraft->threat_type & 2) == 2)
+                          print "H"; // Harvester
+                      if (($fivesdraft->threat_type & 4) == 4)
+                          print "C"; // Comment spammer
+                  }
+              }
               print "<td>" . $fivesdraft->nation . "</td>";
               print "<td>" . iri_StatPress_Abbrevia(iri_StatPress_Decode($fivesdraft->urlrequested), 30) . "</td>";
               print "<td>" . $fivesdraft->os . "</td>";
@@ -751,12 +788,22 @@
           print "</table></div>";
           
           // Last Spiders
-          print "<div class='wrap'><h2>" . __('Last spiders', 'statpress') . "</h2><table class='widefat'><thead><tr><th scope='col'>" . __('Date', 'statpress') . "</th><th scope='col'>" . __('Time', 'statpress') . "</th><th scope='col'>" . __('Spider', 'statpress') . "</th><th scope='col'>" . __('Agent', 'statpress') . "</th></tr></thead>";
-          print "<tbody id='the-list'>";
-          $qry = $wpdb->get_results("SELECT date,time,agent,os,browser,spider FROM $table_name WHERE (spider<>'') ORDER BY id DESC $querylimit");
+          print "<div class='wrap'><h2>" . __('Last spiders', 'statpress') . "</h2>";
+          print "<table class='widefat'><thead><tr>";
+          print "<th scope='col'>" . __('Date', 'statpress') . "</th>";
+          print "<th scope='col'>" . __('Time', 'statpress') . "</th>";
+          print "<th scope='col'>" . __('Spider', 'statpress') . "</th>";
+          print "<th scope='col'>" . __('Page', 'statpress') . "</th>";
+          print "<th scope='col'>" . __('Agent', 'statpress') . "</th>";
+          print "</tr></thead><tbody id='the-list'>";
+          $qry = $wpdb->get_results("SELECT date,time,agent,spider,urlrequested,agent FROM $table_name WHERE (spider<>'') ORDER BY id DESC $querylimit");
           foreach ($qry as $rk)
           {
-              print "<tr><td>" . irihdate($rk->date) . "</td><td>" . $rk->time . "</td><td>" . $rk->spider . "</td><td> " . $rk->agent . "</td></tr>\n";
+              print "<tr><td>" . irihdate($rk->date) . "</td>";
+              print "<td>" . $rk->time . "</td>";
+              print "<td>" . $rk->spider . "</td>";
+              print "<td>" . iri_StatPress_Abbrevia(iri_StatPress_Decode($rk->urlrequested), 30) . "</td>";
+              print "<td> " . $rk->agent . "</td></tr>\n";
           }
           print "</table></div>";
           
@@ -853,7 +900,7 @@ document.getElementById(thediv).style.display="none"
               print "<span style='color:#006dca;cursor:pointer;border-bottom:1px dotted #AFD5F9;font-size:8pt;' onClick=ttogle('" . $rk->ip . "');>" . __('more info', 'statpress') . "</span></div>";
               print "<div id='" . $rk->ip . "' name='" . $rk->ip . "'>" . $rk->os . ", " . $rk->browser;
               //    print "<br><iframe style='overflow:hide;border:0px;width:100%;height:15px;font-family:helvetica;paddng:0;' scrolling='no' marginwidth=0 marginheight=0 src=http://showip.fakap.net/txt/".$rk->ip."></iframe>";
-              print "<br><iframe style='overflow:hide;border:0px;width:100%;height:30px;font-family:helvetica;paddng:0;' scrolling='no' marginwidth=0 marginheight=0 src=http://api.hostip.info/get_html.php?ip=" . $rk->ip . "></iframe>";
+              print "<br><iframe style='overflow:hide;border:0px;width:100%;height:40px;font-family:helvetica;paddng:0;' scrolling='no' marginwidth=0 marginheight=0 src=http://api.hostip.info/get_html.php?ip=" . $rk->ip . "></iframe>";
               if ($rk->nation)
               {
                   print "<br><small>" . gethostbyaddr($rk->ip) . "</small>";
@@ -1094,7 +1141,7 @@ document.getElementById(thediv).style.display="none"
           {
               $res = "...";
           }
-          return mb_substr($s, 0, $c) . $res;
+          return my_substr($s, 0, $c) . $res;
       }
       
       function iri_StatPress_Where($ip)
@@ -1121,26 +1168,26 @@ document.getElementById(thediv).style.display="none"
 	          {
 	              $out_url = __('Page', 'statpress') . ": Home";
 	          }
-	          if (mb_substr($out_url, 0, 4) == "cat=")
+	          if (my_substr($out_url, 0, 4) == "cat=")
 	          {
-	              $out_url = __('Category', 'statpress') . ": " . get_cat_name(mb_substr($out_url, 4));
+	              $out_url = __('Category', 'statpress') . ": " . get_cat_name(my_substr($out_url, 4));
 	          }
-	          if (mb_substr($out_url, 0, 2) == "m=")
+	          if (my_substr($out_url, 0, 2) == "m=")
 	          {
-	              $out_url = __('Calendar', 'statpress') . ": " . mb_substr($out_url, 6, 2) . "/" . mb_substr($out_url, 2, 4);
+	              $out_url = __('Calendar', 'statpress') . ": " . my_substr($out_url, 6, 2) . "/" . my_substr($out_url, 2, 4);
 	          }
-	          if (mb_substr($out_url, 0, 2) == "s=")
+	          if (my_substr($out_url, 0, 2) == "s=")
 	          {
-	              $out_url = __('Search', 'statpress') . ": " . mb_substr($out_url, 2);
+	              $out_url = __('Search', 'statpress') . ": " . my_substr($out_url, 2);
 	          }
-	          if (mb_substr($out_url, 0, 2) == "p=")
+	          if (my_substr($out_url, 0, 2) == "p=")
 	          {
-	              $post_id_7 = get_post(mb_substr($out_url, 2), ARRAY_A);
+	              $post_id_7 = get_post(my_substr($out_url, 2), ARRAY_A);
 	              $out_url = $post_id_7['post_title'];
 	          }
-	          if (mb_substr($out_url, 0, 8) == "page_id=")
+	          if (my_substr($out_url, 0, 8) == "page_id=")
 	          {
-	              $post_id_7 = get_page(mb_substr($out_url, 8), ARRAY_A);
+	              $post_id_7 = get_page(my_substr($out_url, 8), ARRAY_A);
 	              $out_url = __('Page', 'statpress') . ": " . $post_id_7['post_title'];
 	          }
 	        }
@@ -1150,26 +1197,26 @@ document.getElementById(thediv).style.display="none"
 	          {
 	              $out_url = __('Page', 'statpress') . ": Home";
 	          }
-	          else if (mb_substr($out_url, 0, 9) == "category/")
+	          else if (my_substr($out_url, 0, 9) == "category/")
 	          {
-	              $out_url = __('Category', 'statpress') . ": " . get_cat_name(mb_substr($out_url, 9));
+	              $out_url = __('Category', 'statpress') . ": " . get_cat_name(my_substr($out_url, 9));
 	          }
-	          else if (mb_substr($out_url, 0, 8) == "//") // not working yet
+	          else if (my_substr($out_url, 0, 8) == "//") // not working yet
 	          {
-	              //$out_url = __('Calendar', 'statpress') . ": " . mb_substr($out_url, 4, 0) . "/" . mb_substr($out_url, 6, 7);
+	              //$out_url = __('Calendar', 'statpress') . ": " . my_substr($out_url, 4, 0) . "/" . my_substr($out_url, 6, 7);
 	          }
-	          else if (mb_substr($out_url, 0, 2) == "s=")
+	          else if (my_substr($out_url, 0, 2) == "s=")
 	          {
-	              $out_url = __('Search', 'statpress') . ": " . mb_substr($out_url, 2);
+	              $out_url = __('Search', 'statpress') . ": " . my_substr($out_url, 2);
 	          }
-	          else if (mb_substr($out_url, 0, 2) == "p=") // not working yet 
+	          else if (my_substr($out_url, 0, 2) == "p=") // not working yet 
 	          {
-	              $post_id_7 = get_post(mb_substr($out_url, 2), ARRAY_A);
+	              $post_id_7 = get_post(my_substr($out_url, 2), ARRAY_A);
 	              $out_url = $post_id_7['post_title'];
 	          }
-	          else if (mb_substr($out_url, 0, 8) == "page_id=") // not working yet
+	          else if (my_substr($out_url, 0, 8) == "page_id=") // not working yet
 	          {
-	              $post_id_7 = get_page(mb_substr($out_url, 8), ARRAY_A);
+	              $post_id_7 = get_page(my_substr($out_url, 8), ARRAY_A);
 	              $out_url = __('Page', 'statpress') . ": " . $post_id_7['post_title'];
 	          }
 	        }
@@ -1185,9 +1232,9 @@ document.getElementById(thediv).style.display="none"
               // SEO problem!
               $urlRequested = (isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : '');
           }
-          if (mb_substr($urlRequested, 0, 2) == '/?')
+          if (my_substr($urlRequested, 0, 2) == '/?')
           {
-              $urlRequested = mb_substr($urlRequested, 2);
+              $urlRequested = my_substr($urlRequested, 2);
           }
           if ($urlRequested == '/')
           {
@@ -1205,14 +1252,14 @@ document.getElementById(thediv).style.display="none"
       // Converte da data us to default format di Wordpress
       function irihdate($dt = "00000000")
       {
-          return mysql2date(get_option('date_format'), mb_substr($dt, 0, 4) . "-" . mb_substr($dt, 4, 2) . "-" . mb_substr($dt, 6, 2));
+          return mysql2date(get_option('date_format'), my_substr($dt, 0, 4) . "-" . my_substr($dt, 4, 2) . "-" . my_substr($dt, 6, 2));
       }
       
       
       function iritablesize($table)
       {
           global $wpdb;
-          $res = $wpdb->get_results("SHOW TABLE STATUS WHERE NAME = '$table'");
+          $res = $wpdb->get_results("SHOW TABLE STATUS LIKE '$table'");
           foreach ($res as $fstatus)
           {
               $data_lenght = $fstatus->Data_length;
@@ -1271,9 +1318,9 @@ document.getElementById(thediv).style.display="none"
                   {
                       $rk->$fld = iri_StatPress_Decode($rk->$fld);
                   }
-                  //      $chl.=urlencode(mb_substr($rk->$fld,0,50))."|";
+                  //      $chl.=urlencode(my_substr($rk->$fld,0,50))."|";
                   //      $chd.=($tdwidth*$pc/100)."|";
-                  print "<tr><td style='width:400px;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>" . mb_substr($rk->$fld, 0, 50);
+                  print "<tr><td style='width:400px;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>" . my_substr($rk->$fld, 0, 50);
                   if (strlen("$rk->fld") >= 50)
                   {
                       print "...";
@@ -1287,8 +1334,8 @@ document.getElementById(thediv).style.display="none"
               }
           }
           print "</table>\n";
-          //  $chl=mb_substr($chl,0,strlen($chl)-1);
-          //  $chd=mb_substr($chd,0,strlen($chd)-1);
+          //  $chl=my_substr($chl,0,strlen($chl)-1);
+          //  $chd=my_substr($chd,0,strlen($chd)-1);
           //  print "<img src=http://chart.apis.google.com/chart?cht=p3&chd=".($chd)."&chs=400x200&chl=".($chl)."&chco=1B75DF,92BF23>\n";
           print "</div>\n";
       }
@@ -1304,7 +1351,7 @@ document.getElementById(thediv).style.display="none"
           }
           else
           {
-              return mb_substr(strrchr($host, "."), 1);
+              return my_substr(strrchr($host, "."), 1);
           }
       }
       
@@ -1316,14 +1363,10 @@ document.getElementById(thediv).style.display="none"
           if (key_exists("query", $tab))
           {
               $query = $tab["query"];
-              if (strpos($url, "&amp;"))
-              {
-                  return explode("&amp;", $query);
-              }
-              else
-              {
-                  return explode("&", $query);
-              }
+              $query = str_replace("&amp;", "&", $query);
+              $query = urldecode($query);
+              $query = str_replace("?", "&", $query);
+              return explode("&", $query);
           }
           else
           {
@@ -1365,7 +1408,10 @@ document.getElementById(thediv).style.display="none"
       
       function iriCheckBanIP($arg)
       {
-          $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/banips.dat');
+         if (file_exists(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/banips.dat'))
+            $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/banips.dat');
+          else
+              $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/banips.dat');print "Updating Spiders... ";
           foreach ($lines as $line_num => $banip)
           {
               if (@strpos($arg, rtrim($banip, "\n")) === false)
@@ -1405,6 +1451,8 @@ document.getElementById(thediv).style.display="none"
           $agent = str_replace(" ", "", $agent);
           $key = null;
           $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/spider.dat');
+          if (file_exists(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/spider.dat'))
+              $lines = array_merge($lines, file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/spider.dat'));
           foreach ($lines as $line_num => $spider)
           {
               list($nome, $key) = explode("|", $spider);
@@ -1462,6 +1510,8 @@ document.getElementById(thediv).style.display="none"
   feed TINYTEXT,
   user TINYTEXT,
   timestamp TINYTEXT,
+  threat_score SMALLINT,
+  threat_type SMALLINT,
   UNIQUE KEY id (id)
   );";
           if ($wp_db_version >= 5540)
@@ -1483,6 +1533,48 @@ function iri_StatPress_is_feed($url) {
    elseif (stristr($url,'/feed') != FALSE) { return 'RSS2'; }
    return '';
 }
+
+
+
+function iriStatPressAgents()
+      {
+          global $wpdb;
+          $table_name = $wpdb->prefix . "statpress";
+          $query = "SELECT date, MAX(time), ip, COUNT(*) as count, agent";
+          $query .= " FROM " . $table_name;
+          $query .= " WHERE spider = '' AND browser = ''";
+          $query .= " GROUP BY date, ip, agent";
+          $query .= " ORDER BY date DESC";
+          $result = $wpdb->get_results($query);
+
+          print "<div class='wrap'><h2>" . __('Unknown User Agents', 'statpress') . "</h2>";
+          print "<table class='widefat'><thead><tr>";
+          print "<th scope='col'>" . __('Date', 'statpress') . "</th>";
+          print "<th scope='col'>" . __('Last Time', 'statpress') . "</th>";
+          print "<th scope='col'>" . __('IP', 'statpress') . "</th>";
+          print "<th scope='col'>" . __('Count', 'statpress') . "</th>";
+          print "<th scope='col'>" . __('User Agent', 'statpress') . "</th>";
+          print "</tr></thead><tbody id='the-list'>";
+
+          foreach ($result as $line)
+          {   
+            $col = 0;
+            print '<tr>';
+            foreach ($line as $col_value)
+{
+    $col++;
+    if ($col == 1)
+        print '<td>' . irihdate($col_value) . '</td>';
+    else if ($col == 3)
+        print "<td><a href='http://www.projecthoneypot.org/ip_" . $col_value . "' target='_blank'>" . $col_value . "</a></td>";
+    else
+        print '<td>' . $col_value . '</td>';
+}
+            print '</tr>';
+          }
+          print '</table></div>';
+      }
+
 
 function iri_StatPress_extractfeedreq($url)
 {
@@ -1519,6 +1611,24 @@ function iri_StatPress_extractfeedreq($url)
           if (iriCheckBanIP($ipAddress) == '')
           {
               return '';
+          }
+          
+          // Determine Threats if http:bl installed
+          $threat_score = 0;
+          $threat_type = 0;
+          $httpbl_key = get_option("httpbl_key");
+          if ($httpbl_key !== false)
+          {
+              $result = explode( ".", gethostbyname( $httpbl_key . "." .
+                  implode ( ".", array_reverse( explode( ".",
+                  $ipAddress ) ) ) .
+                  ".dnsbl.httpbl.org" ) );
+              // If the response is positive
+              if ($result[0] == 127)
+              {
+                  $threat_score = $result[2];
+                  $threat_type = $result[3];
+              }
           }
           
           // URL (requested)
@@ -1590,7 +1700,7 @@ function iri_StatPress_extractfeedreq($url)
                   iri_StatPress_CreateTable();
               }
               
-              $insert = "INSERT INTO " . $table_name . " (date, time, ip, urlrequested, agent, referrer, search,nation,os,browser,searchengine,spider,feed,user,timestamp) " . "VALUES ('$vdate','$vtime','$ipAddress','" . mysql_real_escape_string($urlRequested) . "','" . mysql_real_escape_string(strip_tags($userAgent)) . "','" . mysql_real_escape_string($referrer) . "','" . mysql_real_escape_string(strip_tags($search_phrase)) . "','" . iriDomain($ipAddress) . "','" . mysql_real_escape_string($os) . "','" . mysql_real_escape_string($browser) . "','$searchengine','$spider','$feed','$userdata->user_login','$timestamp')";
+              $insert = "INSERT INTO " . $table_name . " (date, time, ip, urlrequested, agent, referrer, search,nation,os,browser,searchengine,spider,feed,user,threat_score,threat_type,timestamp) " . "VALUES ('$vdate','$vtime','$ipAddress','" . mysql_real_escape_string($urlRequested) . "','" . mysql_real_escape_string(strip_tags($userAgent)) . "','" . mysql_real_escape_string($referrer) . "','" . mysql_real_escape_string(strip_tags($search_phrase)) . "','" . iriDomain($ipAddress) . "','" . mysql_real_escape_string($os) . "','" . mysql_real_escape_string($browser) . "','$searchengine','$spider','$feed','$userdata->user_login',$threat_score,$threat_type,'$timestamp')";
               $results = $wpdb->query($insert);
           }
       }
@@ -1674,10 +1784,11 @@ function iri_StatPress_extractfeedreq($url)
           }
           print "" . __('done', 'statpress') . "<br>";
           
-          // Update Spider
           print "Updating Spiders... ";
           $wpdb->query("UPDATE $table_name SET spider = '';");
           $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/spider.dat');
+          if (file_exists(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/spider.dat'))
+              $lines = array_merge($lines, file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/spider.dat'));
           foreach ($lines as $line_num => $spider)
           {
               list($nome, $id) = explode("|", $spider);
@@ -1920,7 +2031,16 @@ function iri_StatPress_extractfeedreq($url)
       }
       
       
-      load_plugin_textdomain('statpress', 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/locale');
+		// a custom function for loading localization
+		function statpress_load_textdomain() {
+		//check whether necessary core function exists
+		if ( function_exists('load_plugin_textdomain') ) {
+		//load the plugin textdomain
+		load_plugin_textdomain('statpress', 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/locale');
+		}
+		}
+		// call the custom function on the init hook
+		add_action('init', 'statpress_load_textdomain');
       
       add_action('admin_menu', 'iri_add_pages');
       add_action('plugins_loaded', 'widget_statpress_init');
