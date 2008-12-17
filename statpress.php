@@ -1415,7 +1415,7 @@ document.getElementById(thediv).style.display="none"
          if (file_exists(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/banips.dat'))
             $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/banips.dat');
           else
-              $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/banips.dat');print "Updating Spiders... ";
+              $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/banips.dat');
           foreach ($lines as $line_num => $banip)
           {
               if (@strpos($arg, rtrim($banip, "\n")) === false)
