@@ -3,12 +3,12 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
    Description: Improved real time stats for your blog
-   Version: 1.5.1
+   Version: 1.5.2
    Author: Manuel Grabowski
    Author URI: http://blog.matrixagents.org/
    */
   
-  $_STATPRESS['version'] = '1.5.1';
+  $_STATPRESS['version'] = '1.5.2';
   $_STATPRESS['feedtype'] = '';
   
   

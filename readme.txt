@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.5
 Tested up to: 2.7
-Stable Tag: 1.5.1
+Stable Tag: 1.5.2
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
@@ -354,6 +354,6 @@ Please visit the <a href="http://matrixagents.org/phpBB/">discussion board<a/>.
 * <b>Big thanks for all the help and participation in the support forums! Most of the new features come from users, I just put them together. I'm thrilled to see the development of this plugin!</b>
 * This will, if no major problems or security leaks occur, hopefully be the last release of the 1.x-branch so far. StatPress Reloaded 2.x will be a nearly 100% rewrite and still take quite some time to finish. But it will be significantly faster and a lot easier to maintain for me.
 
-*Version 1.5.1 (17.12.2008)*
+*Version 1.5.2 (17.12.2008)*
 
 * I wonder if I'll ever manage to release a bigger update without some remaining errors. Thanks for your quick reports, hopefully this is a stable release now for real.
