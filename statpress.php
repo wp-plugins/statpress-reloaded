@@ -3,12 +3,12 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
    Description: Improved real time stats for your blog
-   Version: 1.5.2
+   Version: 1.5.3
    Author: Manuel Grabowski
    Author URI: http://blog.matrixagents.org/
    */
   
-  $_STATPRESS['version'] = '1.5.2';
+  $_STATPRESS['version'] = '1.5.3';
   $_STATPRESS['feedtype'] = '';
   
   
@@ -326,7 +326,7 @@
   <th scope='col'>" . __('Total', 'statpress') . "</th>
   <th scope='col'>" . __('Last month', 'statpress') . "<br /><font size=1>" . gmdate('M, Y', gmmktime(0, 0, 0, $tlm[1], 1, $tlm[0])) . "</font></th>
   <th scope='col'>" . __('This month', 'statpress') . "<br /><font size=1>" . gmdate('M, Y', current_time('timestamp')) . "</font></th>
-  <th scope='col'>Target " . __('This month', 'statpress') . "<br /><font size=1>" . gmdate('M, Y', current_time('timestamp')) . "</font></th>
+  <th scope='col'>" . __('Target', 'statpress') . " " . __('This month', 'statpress') . "<br /><font size=1>" . gmdate('M, Y', current_time('timestamp')) . "</font></th>
   <th scope='col'>" . __('Yesterday', 'statpress') . "<br /><font size=1>" . gmdate('d M, Y', current_time('timestamp') - 86400) . "</font></th>
   <th scope='col'>" . __('Today', 'statpress') . "<br /><font size=1>" . gmdate('d M, Y', current_time('timestamp')) . "</font></th>
   </tr></thead>
@@ -478,7 +478,7 @@
           print "</tr>";
           //###############################################################################################
           // SPIDERS ROW
-          print "<tr><td><div style='background:$spider_color;width:10px;height:10px;float:left;margin-top:4px;margin-right:5px;'></div>Spiders</td>";
+          print "<tr><td><div style='background:$spider_color;width:10px;height:10px;float:left;margin-top:4px;margin-right:5px;'></div>" . __('Spiders', 'statpress') . "</td>";
           //TOTAL
           $qry_total = $wpdb->get_row("
     SELECT count(date) as spiders
@@ -549,7 +549,7 @@
           print "</tr>";
           //###############################################################################################
           // FEEDS ROW
-          print "<tr><td><div style='background:$rss_color;width:10px;height:10px;float:left;margin-top:4px;margin-right:5px;'></div>Feeds</td>";
+          print "<tr><td><div style='background:$rss_color;width:10px;height:10px;float:left;margin-top:4px;margin-right:5px;'></div>" . __('Feeds', 'statpress') . "</td>";
           //TOTAL
           $qry_total = $wpdb->get_row("
     SELECT count(date) as feeds
@@ -696,10 +696,10 @@
               // week-cut
               print "><div style='float:left;height: 100%;width:100%;font-family:Helvetica;font-size:7pt;text-align:center;border-right:1px solid white;color:black;'>
     <div style='background:#ffffff;width:100%;height:" . $px_white . "px;'></div>
-    <div style='background:$unique_color;width:100%;height:" . $px_visitors . "px;' title='" . $qry_visitors->total . " visitors'></div>
-    <div style='background:$web_color;width:100%;height:" . $px_pageviews . "px;' title='" . $qry_pageviews->total . " pageviews'></div>
-    <div style='background:$spider_color;width:100%;height:" . $px_spiders . "px;' title='" . $qry_spiders->total . " spiders'></div>
-    <div style='background:$rss_color;width:100%;height:" . $px_feeds . "px;' title='" . $qry_feeds->total . " feeds'></div>
+    <div style='background:$unique_color;width:100%;height:" . $px_visitors . "px;' title='" . $qry_visitors->total . " " . __('visitors', 'statpress')."'></div>
+    <div style='background:$web_color;width:100%;height:" . $px_pageviews . "px;' title='" . $qry_pageviews->total . " " . __('pageviews', 'statpress')."'></div>
+    <div style='background:$spider_color;width:100%;height:" . $px_spiders . "px;' title='" . $qry_spiders->total . " " . __('spiders', 'statpress')."'></div>
+    <div style='background:$rss_color;width:100%;height:" . $px_feeds . "px;' title='" . $qry_feeds->total . " " . __('feeds', 'statpress')."'></div>
     <div style='background:gray;width:100%;height:1px;'></div>
     <br />" . gmdate('d', current_time('timestamp') - 86400 * $gg) . ' ' . gmdate('M', current_time('timestamp') - 86400 * $gg) . "</div></td>\n";
           }
@@ -715,7 +715,7 @@
           $querylimit = "LIMIT 20";
           
           // Tabella Last hits
-          print "<div class='wrap'><h2>" . __('Last hits', 'statpress') . "</h2><table class='widefat'><thead><tr><th scope='col'>" . __('Date', 'statpress') . "</th><th scope='col'>" . __('Time', 'statpress') . "</th><th scope='col'>IP</th><th scope='col'>Threat</th><th scope='col'>" . __('Domain', 'statpress') . "</th><th scope='col'>" . __('Page', 'statpress') . "</th><th scope='col'>OS</th><th scope='col'>Browser</th><th scope='col'>Feed</th></tr></thead>";
+          print "<div class='wrap'><h2>" . __('Last hits', 'statpress') . "</h2><table class='widefat'><thead><tr><th scope='col'>" . __('Date', 'statpress') . "</th><th scope='col'>" . __('Time', 'statpress') . "</th><th scope='col'>" . __('IP', 'statpress') . "</th><th scope='col'>" . __('Threat', 'statpress') . "</th><th scope='col'>" . __('Domain', 'statpress') . "</th><th scope='col'>" . __('Page', 'statpress') . "</th><th scope='col'>" . __('OS', 'statpress') . "</th><th scope='col'>" . __('Browser', 'statpress') . "</th><th scope='col'>" . __('Feed', 'statpress') . "</th></tr></thead>";
           print "<tbody id='the-list'>";
           
           $fivesdrafts = $wpdb->get_results("SELECT * FROM $table_name WHERE (os<>'' OR feed<>'') order by id DESC $querylimit");
@@ -813,13 +813,13 @@
           
           
           print "<br />";
-          print "&nbsp;<i>StatPress table size: <b>" . iritablesize($wpdb->prefix . "statpress") . "</b></i><br />";
-          print "&nbsp;<i>StatPress current time: <b>" . current_time('mysql') . "</b></i><br />";
-          print "&nbsp;<i>RSS2 url: <b>" . get_bloginfo('rss2_url') . ' (' . iri_StatPress_extractfeedreq(get_bloginfo('rss2_url')) . ")</b></i><br />";
-          print "&nbsp;<i>ATOM url: <b>" . get_bloginfo('atom_url') . ' (' . iri_StatPress_extractfeedreq(get_bloginfo('atom_url')) . ")</b></i><br />";
-          print "&nbsp;<i>RSS url: <b>" . get_bloginfo('rss_url') . ' (' . iri_StatPress_extractfeedreq(get_bloginfo('rss_url')) . ")</b></i><br />";
-          print "&nbsp;<i>COMMENT RSS2 url: <b>" . get_bloginfo('comments_rss2_url') . ' (' . iri_StatPress_extractfeedreq(get_bloginfo('comments_rss2_url')) . ")</b></i><br />";
-          print "&nbsp;<i>COMMENT ATOM url: <b>" . get_bloginfo('comments_atom_url') . ' (' . iri_StatPress_extractfeedreq(get_bloginfo('comments_atom_url')) . ")</b></i><br />";
+          print "&nbsp;<i>" . __('StatPress table size', 'statpress') . ": <b>" . iritablesize($wpdb->prefix . "statpress") . "</b></i><br />";
+          print "&nbsp;<i>" . __('StatPress current time', 'statpress') . ": <b>" . current_time('mysql') . "</b></i><br />";
+          print "&nbsp;<i>" . __('RSS2 url', 'statpress') . ": <b>" . get_bloginfo('rss2_url') . ' (' . iri_StatPress_extractfeedreq(get_bloginfo('rss2_url')) . ")</b></i><br />";
+          print "&nbsp;<i>" . __('ATOM url', 'statpress') . ": <b>" . get_bloginfo('atom_url') . ' (' . iri_StatPress_extractfeedreq(get_bloginfo('atom_url')) . ")</b></i><br />";
+          print "&nbsp;<i>" . __('RSS url', 'statpress') . ": <b>" . get_bloginfo('rss_url') . ' (' . iri_StatPress_extractfeedreq(get_bloginfo('rss_url')) . ")</b></i><br />";
+          print "&nbsp;<i>" . __('COMMENT RSS2 url', 'statpress') . ": <b>" . get_bloginfo('comments_rss2_url') . ' (' . iri_StatPress_extractfeedreq(get_bloginfo('comments_rss2_url')) . ")</b></i><br />";
+          print "&nbsp;<i>" . __('COMMENT ATOM url', 'statpress') . ": <b>" . get_bloginfo('comments_atom_url') . ' (' . iri_StatPress_extractfeedreq(get_bloginfo('comments_atom_url')) . ")</b></i><br />";
       }
       
       function iriStatPressDetails()
@@ -830,46 +830,46 @@
           $querylimit = "LIMIT 10";
           
           // Top days
-          iriValueTable("date", "Top days", 5);
+          iriValueTable("date", __('Top days', 5));
           
           // O.S.
-          iriValueTable("os", "O.S.", 0, "", "", "AND feed='' AND spider='' AND os<>''");
+          iriValueTable("os", __('O.S.', 'statpress'), 0, "", "", "AND feed='' AND spider='' AND os<>''");
           
           // Browser
-          iriValueTable("browser", "Browser", 0, "", "", "AND feed='' AND spider='' AND browser<>''");
+          iriValueTable("browser", __('Browser', 'statpress'), 0, "", "", "AND feed='' AND spider='' AND browser<>''");
           
           // Feeds
-          iriValueTable("feed", "Feeds", 5, "", "", "AND feed<>''");
+          iriValueTable("feed", __('Feeds', 'statpress'), 5, "", "", "AND feed<>''");
           
           // SE
-          iriValueTable("searchengine", "Search engines", 10, "", "", "AND searchengine<>''");
+          iriValueTable("searchengine", __('Search engines', 'statpress'), 10, "", "", "AND searchengine<>''");
           
           // Search terms
-          iriValueTable("search", "Top search terms", 20, "", "", "AND search<>''");
+          iriValueTable("search", __('Top search terms', 'statpress'), 20, "", "", "AND search<>''");
           
           // Top referrer
-          iriValueTable("referrer", "Top referrer", 10, "", "", "AND referrer<>'' AND referrer NOT LIKE '%" . get_bloginfo('url') . "%'");
+          iriValueTable("referrer", __('Top referrer', 'statpress'), 10, "", "", "AND referrer<>'' AND referrer NOT LIKE '%" . get_bloginfo('url') . "%'");
           
           // Countries
-          iriValueTable("nation", "Countries (domains)", 10, "", "", "AND nation<>'' AND spider=''");
+          iriValueTable("nation", __('Countries (domains)', 'statpress'), 10, "", "", "AND nation<>'' AND spider=''");
           
           // Spider
-          iriValueTable("spider", "Spiders", 10, "", "", "AND spider<>''");
+          iriValueTable("spider", __('Spiders', 'statpress'), 10, "", "", "AND spider<>''");
           
           // Top Pages
-          iriValueTable("urlrequested", "Top pages", 5, "", "urlrequested", "AND feed='' and spider=''");
+          iriValueTable("urlrequested", __('Top pages', 'statpress'), 5, "", "urlrequested", "AND feed='' and spider=''");
           
           
           // Top Days - Unique visitors
-          iriValueTable("date", "Top Days - Unique visitors", 5, "distinct", "ip", "AND feed='' and spider=''");
+          iriValueTable("date", __('Top Days - Unique visitors', 'statpress'), 5, "distinct", "ip", "AND feed='' and spider=''");
           /* Maddler 04112007: required patching iriValueTable */
           
           // Top Days - Pageviews
-          iriValueTable("date", "Top Days - Pageviews", 5, "", "urlrequested", "AND feed='' and spider=''");
+          iriValueTable("date", __('Top Days - Pageviews', 'statpress'), 5, "", "urlrequested", "AND feed='' and spider=''");
           /* Maddler 04112007: required patching iriValueTable */
           
           // Top IPs - Pageviews
-          iriValueTable("ip", "Top IPs - Pageviews", 5, "", "urlrequested", "AND feed='' and spider=''");
+          iriValueTable("ip", __('Top IPs - Pageviews', 'statpress'), 5, "", "urlrequested", "AND feed='' and spider=''");
           /* Maddler 04112007: required patching iriValueTable */
       }
       
@@ -949,9 +949,9 @@ document.getElementById(thediv).style.display="none"
           $f['search'] = __('Search terms', 'statpress');
           $f['searchengine'] = __('Search engine', 'statpress');
           $f['os'] = __('Operative system', 'statpress');
-          $f['browser'] = "Browser";
-          $f['spider'] = "Spider";
-          $f['ip'] = "IP";
+          $f['browser'] = __('Browser', 'statpress');
+          $f['spider'] = __('Spider', 'statpress');
+          $f['ip'] = __('IP', 'statpress');
 ?>
   <div class='wrap'><h2><?php
           _e('Search', 'statpress');
@@ -1331,7 +1331,7 @@ document.getElementById(thediv).style.display="none"
                   }
                   // <td style='text-align:right'>$pc%</td>";
                   print "</td><td style='text-align:center;'>" . $rk->pageview . "</td>";
-                  print "<td><div style='text-align:right;padding:2px;font-family:helvetica;font-size:7pt;font-weight:bold;height:16px;width:" . ($tdwidth * $pc / 100) . "px;background:" . irirgbhex($red, $green, $blue) . ";border-top:1px solid " . irirgbhex($red + 20, $green + 20, $blue) . ";border-right:1px solid " . irirgbhex($red + 30, $green + 30, $blue) . ";border-bottom:1px solid " . irirgbhex($red - 20, $green - 20, $blue) . ";'>$pc%</div>";
+                  print "<td><div style='text-align:right;padding:2px;font-family:helvetica;font-size:7pt;font-weight:bold;height:16px;width:" . number_format(($tdwidth * $pc / 100), 1, '.', '') . "px;background:" . irirgbhex($red, $green, $blue) . ";border-top:1px solid " . irirgbhex($red + 20, $green + 20, $blue) . ";border-right:1px solid " . irirgbhex($red + 30, $green + 30, $blue) . ";border-bottom:1px solid " . irirgbhex($red - 20, $green - 20, $blue) . ";'>$pc%</div>";
                   print "</td></tr>\n";
                   $red = $red + $deltacolor;
                   $blue = $blue - ($deltacolor / 2);
@@ -1717,12 +1717,12 @@ function iri_StatPress_extractfeedreq($url)
           
           $wpdb->show_errors();
           // update table
-          print "Updating table struct $table_name... ";
+          print "" . __('Updating table struct', 'statpress') . " $table_name... ";
           iri_StatPress_CreateTable();
           print "" . __('done', 'statpress') . "<br>";
           
           // Update Feed
-          print "Updating Feeds... ";
+          print "" . __('Updating Feeds', 'statpress') . "... ";
           $wpdb->query("UPDATE $table_name SET feed='';");
           
           // standard blog info urls
@@ -1765,7 +1765,7 @@ function iri_StatPress_extractfeedreq($url)
           print "" . __('done', 'statpress') . "<br>";
           
           // Update OS
-          print "Updating OS... ";
+          print "" . __('Updating OS', 'statpress') . "... ";
           $wpdb->query("UPDATE $table_name SET os = '';");
           $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/os.dat');
           foreach ($lines as $line_num => $os)
@@ -1777,7 +1777,7 @@ function iri_StatPress_extractfeedreq($url)
           print "" . __('done', 'statpress') . "<br>";
           
           // Update Browser
-          print "Updating Browsers... ";
+          print "". __('Updating Browsers', 'statpress') ."... ";
           $wpdb->query("UPDATE $table_name SET browser = '';");
           $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/browser.dat');
           foreach ($lines as $line_num => $browser)
@@ -1788,7 +1788,7 @@ function iri_StatPress_extractfeedreq($url)
           }
           print "" . __('done', 'statpress') . "<br>";
           
-          print "Updating Spiders... ";
+          print "" . __('Updating Spiders', 'statpress') . "... ";
           $wpdb->query("UPDATE $table_name SET spider = '';");
           $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/spider.dat');
           if (file_exists(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/spider.dat'))
@@ -1802,17 +1802,17 @@ function iri_StatPress_extractfeedreq($url)
           print "" . __('done', 'statpress') . "<br>";
           
           // Update feed to ''
-          print "Updating Feeds... ";
+          print "" . __('Updating Feeds', 'statpress') . "... ";
           $wpdb->query("UPDATE $table_name SET feed = '' WHERE isnull(feed);");
-          print "done<br>";
+          print "" . __('done', 'statpress') . "<br>";
           
           // Update Search engine
-          print "Updating Search engines... ";
+          print "" . __('Updating Search engines', 'statpress') . "... ";
           print "<br>";
           $wpdb->query("UPDATE $table_name SET searchengine = '', search='';");
-          print "...null-ed!<br>";
+          print "..." . __('null-ed', 'statpress') . "!<br>";
           $qry = $wpdb->get_results("SELECT id, referrer FROM $table_name WHERE referrer !=''");
-          print "...select-ed!<br>";
+          print "..." . __('select-ed', 'statpress') . "!<br>";
           foreach ($qry as $rk)
           {
               list($searchengine, $search_phrase) = explode("|", iriGetSE($rk->referrer));

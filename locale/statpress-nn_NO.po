@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: StatPress Reloaded\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-17 18:06+0100\n"
-"PO-Revision-Date: 2008-12-17 18:17+0100\n"
+"POT-Creation-Date: 2008-12-17 17:51+0100\n"
+"PO-Revision-Date: 2008-12-17 17:55+0100\n"
 "Last-Translator: Simon Hansen <simonboba@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,16 +18,16 @@ msgstr ""
 #: ../statpress.php:39
 #: ../statpress.php:323
 msgid "Overview"
-msgstr "Oversikt"
+msgstr "Oversyn"
 
 #: ../statpress.php:40
 msgid "Details"
-msgstr "Detaljer"
+msgstr "Detaljar"
 
 #: ../statpress.php:41
 #: ../statpress.php:885
 msgid "Spy"
-msgstr "Besøkerinformasjon"
+msgstr "Spion"
 
 #: ../statpress.php:42
 #: ../statpress.php:957
@@ -40,36 +40,36 @@ msgstr "Søk"
 #: ../statpress.php:43
 #: ../statpress.php:279
 msgid "Export"
-msgstr "Eksportér"
+msgstr "Eksporter"
 
 #: ../statpress.php:44
 #: ../statpress.php:141
 msgid "Options"
-msgstr "Innstillinger"
+msgstr "Val"
 
 #: ../statpress.php:45
 msgid "User Agents"
-msgstr "Brukeragenter"
+msgstr "Brukaragentar"
 
 #: ../statpress.php:46
 msgid "StatPressUpdate"
-msgstr "StatPress-oppdatering"
+msgstr "Oppdatering av StatPress"
 
 #: ../statpress.php:135
 msgid "Saved"
-msgstr "Lagret"
+msgstr "Lagra"
 
 #: ../statpress.php:145
 msgid "Collect data about logged users, too."
-msgstr "Samle data også om påloggede brukere"
+msgstr "Skaff data om pålogga brukarar òg"
 
 #: ../statpress.php:146
 msgid "Do not collect spiders visits"
-msgstr "Ikke samle robotbesøk"
+msgstr "Ikkje samla vitjingar frå robotar"
 
 #: ../statpress.php:149
 msgid "Automatically delete visits older than"
-msgstr "Automatisk slett besøk eldre enn"
+msgstr "Slett vitjingar eldre enn"
 
 #: ../statpress.php:156
 #: ../statpress.php:186
@@ -79,12 +79,12 @@ msgstr "Aldri slett!"
 #: ../statpress.php:162
 #: ../statpress.php:189
 msgid "month"
-msgstr "måned"
+msgstr "månad"
 
 #: ../statpress.php:168
 #: ../statpress.php:174
 msgid "months"
-msgstr "måneder"
+msgstr "månader"
 
 #: ../statpress.php:180
 #: ../statpress.php:190
@@ -93,7 +93,7 @@ msgstr "år"
 
 #: ../statpress.php:184
 msgid "Automatically delete spider visits older than"
-msgstr "Automatisk slett robotbesøk eldre enn"
+msgstr "Slett robot-vitjingar eldre enn"
 
 #: ../statpress.php:187
 msgid "day"
@@ -101,24 +101,24 @@ msgstr "dag"
 
 #: ../statpress.php:188
 msgid "week"
-msgstr "uke"
+msgstr "veke"
 
 #: ../statpress.php:194
 msgid "Days in Overview graph"
-msgstr "Antall dager i oversiktsgrafen"
+msgstr "Tal på dagar i oversynsgrafen"
 
 #: ../statpress.php:220
 msgid "Minimum capability to view stats"
-msgstr "Minste brukeregenskap for å se statistikk"
+msgstr "Lågaste brukarløyve for å sjå statistikken"
 
 #: ../statpress.php:228
 #: ../statpress.php:904
 msgid "more info"
-msgstr "mer informasjon"
+msgstr "meir informasjon"
 
 #: ../statpress.php:233
 msgid "Save options"
-msgstr "Lagre innstillinger"
+msgstr "Lagra vala"
 
 #: ../statpress.php:266
 msgid "Export stats to text file"
@@ -126,7 +126,7 @@ msgstr "Eksportér data til tekstfil"
 
 #: ../statpress.php:270
 msgid "From"
-msgstr "Fra"
+msgstr "Frå"
 
 #: ../statpress.php:273
 msgid "To"
@@ -134,7 +134,7 @@ msgstr "Til"
 
 #: ../statpress.php:276
 msgid "Fields delimiter"
-msgstr "Skilletegn"
+msgstr "Skiljeteikn"
 
 #: ../statpress.php:326
 msgid "Total"
@@ -142,12 +142,12 @@ msgstr "Totalt"
 
 #: ../statpress.php:327
 msgid "Last month"
-msgstr "Forrige måned"
+msgstr "Førre månaden"
 
 #: ../statpress.php:328
 #: ../statpress.php:329
 msgid "This month"
-msgstr "Denne måneden"
+msgstr "Denne månaden"
 
 #: ../statpress.php:329
 msgid "Target"
@@ -163,41 +163,41 @@ msgstr "I dag"
 
 #: ../statpress.php:337
 msgid "Visitors"
-msgstr "Besøkende"
+msgstr "Vitjingar"
 
 #: ../statpress.php:409
 msgid "Pageviews"
-msgstr "Sidevisninger"
+msgstr "Sidevisningar"
 
 #: ../statpress.php:481
 #: ../statpress.php:857
 msgid "Spiders"
-msgstr "Roboter"
+msgstr "Robotar"
 
 #: ../statpress.php:552
 #: ../statpress.php:842
 msgid "Feeds"
-msgstr "Nyhetsstrøm"
+msgstr "Nyhendestraumar"
 
 #: ../statpress.php:699
 msgid "visitors"
-msgstr "besøkende"
+msgstr "vitjingar"
 
 #: ../statpress.php:700
 msgid "pageviews"
-msgstr "sidevisninger"
+msgstr "sidevisningar"
 
 #: ../statpress.php:701
 msgid "spiders"
-msgstr "roboter"
+msgstr "robotar"
 
 #: ../statpress.php:702
 msgid "feeds"
-msgstr "nyhetsstrømmer"
+msgstr "nyhendestraumar"
 
 #: ../statpress.php:718
 msgid "Last hits"
-msgstr "Seneste tref"
+msgstr "Seinaste treff"
 
 #: ../statpress.php:718
 #: ../statpress.php:755
@@ -230,7 +230,7 @@ msgstr "Trussel"
 
 #: ../statpress.php:718
 msgid "Domain"
-msgstr "Doméne"
+msgstr "Domene"
 
 #: ../statpress.php:718
 #: ../statpress.php:785
@@ -250,23 +250,23 @@ msgstr "OS"
 #: ../statpress.php:839
 #: ../statpress.php:952
 msgid "Browser"
-msgstr "Nettleser"
+msgstr "Vevmysar"
 
 #: ../statpress.php:718
 msgid "Feed"
-msgstr "Nyhetsstrøm"
+msgstr "Nyhendestraumar"
 
 #: ../statpress.php:755
 msgid "Last search terms"
-msgstr "Seneste søkeord"
+msgstr "Seinaste søkjeord"
 
 #: ../statpress.php:755
 msgid "Terms"
-msgstr "Søkeord"
+msgstr "Søkjeord"
 
 #: ../statpress.php:755
 msgid "Engine"
-msgstr "Søkemotor"
+msgstr "Søkjemotor"
 
 #: ../statpress.php:755
 #: ../statpress.php:765
@@ -276,11 +276,11 @@ msgstr "Resultat"
 #: ../statpress.php:760
 #: ../statpress.php:770
 msgid "page viewed"
-msgstr "side vist"
+msgstr "side synt fram"
 
 #: ../statpress.php:765
 msgid "Last referrers"
-msgstr "Seneste referanse inn"
+msgstr "Seinaste peikarar hit"
 
 #: ../statpress.php:765
 msgid "URL"
@@ -288,26 +288,26 @@ msgstr "URL"
 
 #: ../statpress.php:775
 msgid "Last agents"
-msgstr "Seneste agent"
+msgstr "Seinaste brukaragent"
 
 #: ../statpress.php:775
 #: ../statpress.php:801
 #: ../statpress.php:947
 msgid "Agent"
-msgstr "Agent"
+msgstr "Brukaragent"
 
 #: ../statpress.php:775
 #: ../statpress.php:785
 msgid "What"
-msgstr "Hva"
+msgstr "Kva"
 
 #: ../statpress.php:785
 msgid "Last pages"
-msgstr "Seneste sider"
+msgstr "Seinaste sider"
 
 #: ../statpress.php:795
 msgid "Last spiders"
-msgstr "Seneste roboter"
+msgstr "Seinaste robot"
 
 #: ../statpress.php:799
 #: ../statpress.php:953
@@ -316,11 +316,11 @@ msgstr "Robot"
 
 #: ../statpress.php:816
 msgid "StatPress table size"
-msgstr "Størrelse på StatPress-tabell"
+msgstr "Tabellstorleik for StatPress"
 
 #: ../statpress.php:817
 msgid "StatPress current time"
-msgstr "StatPress sin tid akkurat nå"
+msgstr "StatPress-tid nett no"
 
 #: ../statpress.php:818
 msgid "RSS2 url"
@@ -336,15 +336,15 @@ msgstr "RSS-url"
 
 #: ../statpress.php:821
 msgid "COMMENT RSS2 url"
-msgstr "RSS2-url for kommentarer"
+msgstr "INNSPEL-RSS2-url"
 
 #: ../statpress.php:822
 msgid "COMMENT ATOM url"
-msgstr "ATOM-url for kommentarer"
+msgstr "INNSPEL-ATOM-url"
 
 #: ../statpress.php:833
 msgid "Top days"
-msgstr "Beste dager"
+msgstr "Beste dagar"
 
 #: ../statpress.php:836
 msgid "O.S."
@@ -352,19 +352,19 @@ msgstr "O.S."
 
 #: ../statpress.php:845
 msgid "Search engines"
-msgstr "Søkemotorer"
+msgstr "Søkjemotor"
 
 #: ../statpress.php:848
 msgid "Top search terms"
-msgstr "Beste søkeord"
+msgstr "Mest nytta søkjeord"
 
 #: ../statpress.php:851
 msgid "Top referrer"
-msgstr "Beste referanser"
+msgstr "Beste peikarar hit"
 
 #: ../statpress.php:854
 msgid "Countries (domains)"
-msgstr "Land (domener)"
+msgstr "Land (domene)"
 
 #: ../statpress.php:860
 msgid "Top pages"
@@ -372,40 +372,40 @@ msgstr "Beste sider"
 
 #: ../statpress.php:864
 msgid "Top Days - Unique visitors"
-msgstr "Beste dager - Unike besøkende"
+msgstr "Beste dagar - unike vitjarar"
 
 #: ../statpress.php:868
 msgid "Top Days - Pageviews"
-msgstr "Beste dager - Sidevisninger"
+msgstr "Beste dagar - Sidevisningar"
 
 #: ../statpress.php:872
 msgid "Top IPs - Pageviews"
-msgstr "Mest brukte IP-er - Sidevisninger"
+msgstr "Mest nytta IP - Sidevisningar"
 
 #: ../statpress.php:924
 #: ../statpress.php:928
 msgid "arrived from"
-msgstr "kom fra"
+msgstr "kom frå"
 
 #: ../statpress.php:924
 msgid "searching"
-msgstr "søker"
+msgstr "søkjer"
 
 #: ../statpress.php:946
 msgid "URL Requested"
-msgstr "URL som ble kalt"
+msgstr "Etterlyst URL"
 
 #: ../statpress.php:948
 msgid "Referrer"
-msgstr "Referanse inn"
+msgstr "Peikarar hit"
 
 #: ../statpress.php:949
 msgid "Search terms"
-msgstr "Søkeord"
+msgstr "Søkjerord"
 
 #: ../statpress.php:950
 msgid "Search engine"
-msgstr "Søkemotor"
+msgstr "Søkjemotor"
 
 #: ../statpress.php:951
 msgid "Operative system"
@@ -417,41 +417,41 @@ msgstr "Felt"
 
 #: ../statpress.php:975
 msgid "Group by"
-msgstr "Gruppér etter"
+msgstr "Grupper etter"
 
 #: ../statpress.php:976
 msgid "Sort by"
-msgstr "Sortér etter"
+msgstr "Sorter etter"
 
 #: ../statpress.php:977
 msgid "if contains"
-msgstr "hvis inneholdet er"
+msgstr "med innhaldet"
 
 #: ../statpress.php:990
 msgid "sort by count if grouped"
-msgstr "sortér etter antall hvis gruppert"
+msgstr "sorter etter tal viss gruppert"
 
 #: ../statpress.php:995
 msgid "include spiders/crawlers/bot"
-msgstr "inkludér roboter"
+msgstr "tel med robotar/kravlarar/innsamlarar"
 
 #: ../statpress.php:1000
 msgid "include feed"
-msgstr "inkludér feed"
+msgstr "inkluder nyhendestraum"
 
 #: ../statpress.php:1009
 #: ../statpress.php:2017
 msgid "Limit results to"
-msgstr "Begrens resultatet til"
+msgstr "Avgrens resultata til"
 
 #: ../statpress.php:1101
 msgid "Results"
-msgstr "Resultater"
+msgstr "Resultat"
 
 #: ../statpress.php:1114
 #: ../statpress.php:1559
 msgid "Count"
-msgstr "Antall"
+msgstr "Tal"
 
 #: ../statpress.php:1177
 #: ../statpress.php:1206
@@ -465,19 +465,19 @@ msgstr "Kalender"
 #: ../statpress.php:1296
 #: ../statpress.php:2018
 msgid "Visits"
-msgstr "Besøk"
+msgstr "Vitjingar"
 
 #: ../statpress.php:1554
 msgid "Unknown User Agents"
-msgstr "Ukjente brukeragenter"
+msgstr "Ukjend brukaragent"
 
 #: ../statpress.php:1557
 msgid "Last Time"
-msgstr "Forrige gang"
+msgstr "F&oslash;rre gong"
 
 #: ../statpress.php:1560
 msgid "User Agent"
-msgstr "Brukeragent"
+msgstr "Brukaragent"
 
 #: ../statpress.php:1722
 #: ../statpress.php:1765
@@ -487,27 +487,27 @@ msgstr "Brukeragent"
 #: ../statpress.php:1807
 #: ../statpress.php:1825
 msgid "done"
-msgstr "utført"
+msgstr "ferdig"
 
 #: ../statpress.php:1768
 msgid "Updating OS"
-msgstr "Oppdaterer operativsystem"
+msgstr "Oppdaterer OS"
 
 #: ../statpress.php:1780
 msgid "Updating Browsers"
-msgstr "Oppdaterer nettlesere"
+msgstr "Oppdaterer vevmysarar"
 
 #: ../statpress.php:1791
 msgid "Updating Spiders"
-msgstr "Oppdaterer roboter"
+msgstr "Oppdaterer robotar"
 
 #: ../statpress.php:1805
 msgid "Updating Feeds"
-msgstr "Oppdaterer nyhetsstrømmer"
+msgstr "Oppdaterer nyhendestraumar"
 
 #: ../statpress.php:1810
 msgid "Updating Search engines"
-msgstr "Oppdaterer søkemotorer"
+msgstr "Oppdaterer søkjemotorar"
 
 #: ../statpress.php:1813
 msgid "null-ed"
@@ -515,7 +515,7 @@ msgstr "nullstilt"
 
 #: ../statpress.php:1815
 msgid "select-ed"
-msgstr "valgt"
+msgstr "vald"
 
 #: ../statpress.php:1829
 msgid "Updated"
@@ -527,7 +527,7 @@ msgstr "Tittel:"
 
 #: ../statpress.php:1976
 msgid "Body:"
-msgstr "Body:"
+msgstr "Kropp:"
 
 #: ../statpress.php:2016
 msgid "Title"
