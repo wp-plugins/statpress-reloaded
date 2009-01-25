@@ -4,58 +4,15 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.5
 Tested up to: 2.7
-Stable Tag: 1.5.4
+Stable Tag: 1.5.5
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
 
 == Description ==
 
-This plugin (previously known as StatPress) shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
-
-Once the plugin StatPress has been activated it immediately starts to collect information.
-Using StatPress you can see your visitors actions while they are surfing your blog or check which are the preferred pages, posts and categories.
-In the Dashboard menu you will find the StatPress page where you could look up the statistics (overview or detailed).
-StatPress also includes a widget you can add to a sidebar (or easy PHP code if you can't use widgets!).
-
-= Multilanguage =
-StatPress speaks English, Italian, Spanish, French, German, Russian, Norwegian, Dutch, Brazilian, Turkish, Swedish!
-Could you translate StatPress in your language? Please contact me!
-
-= What's new? =
-StatPress is alive again! Since the original author, Danielle Lippi, seems to have stopped working on it, i'm dealing with it - thank you, GPL. ;)
-This first release contains two bug fixes and many new browser agents, search engines and spider definitions. More to come!
-
-The changelog is at "Other Notes".
-
-= DB Table maintenance =
-
-StatPress can automatically delete older records to allow the insertion of newer records when your space is limited.
-
-= StatPress Widget / StatPress_Print function =
-
-The widget is customizable. These are the available variables:
-
-* %thistotalvisits% - this page, total visits
-* %since% - Date of the first hit
-* %visits% - Today visits
-* %totalvisits% - Total visits
-* %os% - Operative system
-* %browser% - Browser
-* %ip% - IP address
-* %visitorsonline% - Counts all online visitors
-* %usersonline% - Counts logged online visitors
-* %toppost% - The most viewed Post
-* %topbrowser% - The most used Browser
-* %topos% - The most used O.S.
-* %thistotalpages%
-* %pagestoday%
-* %latesthits%
-
-Now you could add these values everywhere! StatPress offers a new PHP function *StatPress_Print()*.
-* i.e. StatPress_Print("%totalvisits% total visits.");
-Put it whereever you want the details to be displayed in your template. Remember, as this is PHP, it needs to be surrounded by PHP-Tags!
-
+<b>ATTENTION</b>: This is not e real update - sorry for that, but I couldn't think of a better way to reach the user base of StatPress Reloaded.
+As the original author is active again, SPR may come to an end - please read <a href="http://matrixagents.org/phpBB/viewtopic.php?f=10&t=163">here<a/> for more information.
 
 == Installation ==
 
@@ -366,3 +323,7 @@ Please visit the <a href="http://matrixagents.org/phpBB/">discussion board<a/>.
 *Version 1.5.4 (19.12.2008)*
 
 * Translation related fixes
+
+*Version 1.5.5 (24.01.2009)*
+
+* Not a update, only a "news broadcast". Sorry!
