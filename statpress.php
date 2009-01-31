@@ -1,14 +1,14 @@
 <?php
   /*
    Plugin Name: StatPress Reloaded
-   Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
+   Plugin URI: http://blog.matrixagents.org/wp-plugins/
    Description: Improved real time stats for your blog
-   Version: 1.5.6
+   Version: 1.5.7
    Author: Manuel Grabowski
    Author URI: http://blog.matrixagents.org/
    */
   
-  $_STATPRESS['version'] = '1.5.4';
+  $_STATPRESS['version'] = '1.5.7';
   $_STATPRESS['feedtype'] = '';
   
   

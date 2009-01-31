@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.5
 Tested up to: 2.7
-Stable Tag: 1.5.6
+Stable Tag: 1.5.7
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
@@ -331,3 +331,8 @@ Please visit the <a href="http://matrixagents.org/phpBB/">discussion board<a/>.
 
 * DISTINCT search, thanks to  rsramirez!
 * Few smaller bigfixes.
+
+
+*Version 1.5.7 (31.01.2009)*
+
+* It is just not possible to release a bugfix-version without instantly bugfixing afterwards, I guess.
