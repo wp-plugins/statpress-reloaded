@@ -3,7 +3,7 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/statpress-reloaded/
    Description: Improved real time stats for your blog
-   Version: 1.5.5
+   Version: 1.5.6
    Author: Manuel Grabowski
    Author URI: http://blog.matrixagents.org/
    */
@@ -999,6 +999,11 @@ document.getElementById(thediv).style.display="none"
 ?>> <?php
           _e('include feed', 'statpress');
 ?></td></tr>
+<tr><td><input type=checkbox name=distinct value=checked <?php
+          print $_GET['distinct']
+?>> <?php
+          _e('SELECT DISTINCT', 'statpress');
+?></td></tr>
       </table>
     </td>
     <td width=15> </td>
@@ -1096,6 +1101,11 @@ document.getElementById(thediv).style.display="none"
               
               
               $limit = "LIMIT " . $_GET['limitquery'];
+              
+              if ($_GET['distinct'] == 'checked')
+{
+   $fields = " DISTINCT " . $fields;
+}
               
               // Results
               print "<h2>" . __('Results', 'statpress') . "</h2>";
