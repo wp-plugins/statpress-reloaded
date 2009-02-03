@@ -1,17 +1,62 @@
 === Plugin Name ===
 Contributors: matrixagent
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40matrixagents%2eorg&item_name=Dodge%20this%21&no_shipping=1&no_note=1&tax=0&currency_code=EUR&lc=DE&bn=PP%2dDonationsBF&charset=UTF%2d8
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40matrixagents%2eorg&item_name=Dodge%20this%21%20StatPress%20Reloaded&no_shipping=1&no_note=1&tax=0&currency_code=EUR&lc=DE&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.5
 Tested up to: 2.7
-Stable Tag: 1.5.7
+Stable Tag: 1.5.8
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
 
 == Description ==
 
-New: Only a few bugfixes and DISTINCT support for the search feature.
+New in 1.5.8 from 03.02.2009:
+---
+Please see the changelog at "Other Notes".
+
+On a personal note: Recently two people donated and I can't find words to tell you how stunned I am!
+Thank you so much - I really couldn't believe it and thought the mail from Paypal was spam/fraud.
+---
+
+This plugin (a highly improved fork of StatPress) shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
+
+Once the plugin StatPress has been activated it immediately starts to collect information.
+Using StatPress Reloaded you can see your visitors actions while they are surfing your blog or check which are the preferred pages, posts and categories.
+In the Dashboard menu you will find the StatPress Reloaded page where you could look up the statistics (overview or detailed).
+StatPress Reloaded also includes a widget you can add to a sidebar (or easy PHP code if you can't use widgets!).
+
+= Multilanguage =
+StatPress Reloaded speaks English, Italian, Spanish, French, German, Russian, Norwegian, Dutch, Brazilian, Turkish, Swedish!
+Could you translate StatPress in your language? Please contact me!
+
+= DB Table maintenance =
+
+StatPress can automatically delete older records to allow the insertion of newer records when your space is limited.
+
+= StatPress Widget / StatPress_Print function =
+
+The widget is customizable. These are the available variables:
+
+* %thistotalvisits% - this page, total visits
+* %since% - Date of the first hit
+* %visits% - Today visits
+* %totalvisits% - Total visits
+* %os% - Operative system
+* %browser% - Browser
+* %ip% - IP address
+* %visitorsonline% - Counts all online visitors
+* %usersonline% - Counts logged online visitors
+* %toppost% - The most viewed Post
+* %topbrowser% - The most used Browser
+* %topos% - The most used O.S.
+* %thistotalpages%
+* %pagestoday%
+* %latesthits%
+
+Now you could add these values everywhere! StatPress offers a new PHP function *StatPress_Print()*.
+* i.e. StatPress_Print("%totalvisits% total visits.");
+Put it whereever you want the details to be displayed in your template. Remember, as this is PHP, it needs to be surrounded by PHP-Tags!
 
 == Installation ==
 
@@ -332,7 +377,13 @@ Please visit the <a href="http://matrixagents.org/phpBB/">discussion board<a/>.
 * DISTINCT search, thanks to  rsramirez!
 * Few smaller bigfixes.
 
-
 *Version 1.5.7 (31.01.2009)*
 
 * It is just not possible to release a bugfix-version without instantly bugfixing afterwards, I guess.
+
+*Version 1.5. (03.02.2009)*
+
+* Tiny GUI fix: "Overview and StatPress aren't doubling each other in the menu any longer.
+* Spanish translations update, thanks a lot to nv1962!
+* BAN-IPs can now be entered in the same format as Google Analytics uses: regular expressions.  Thanks, mihu!
+* ReadMe fixed, now again contains all the variables you can use.

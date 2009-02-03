@@ -3,7 +3,7 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/wp-plugins/
    Description: Improved real time stats for your blog
-   Version: 1.5.7
+   Version: 1.5.8
    Author: Manuel Grabowski
    Author URI: http://blog.matrixagents.org/
    */
@@ -35,8 +35,8 @@
       }
 
 
-      add_menu_page('StatPress', 'StatPress', $mincap, __FILE__, 'iriStatPress');
-      add_submenu_page(__FILE__, __('Overview', 'statpress'), __('Overview', 'statpress'), $mincap, __FILE__ . '&statpress_action=overview', 'iriStatPressMain');
+      add_menu_page('StatPress Reloaded', 'StatPress', $mincap, __FILE__, 'iriStatPress');
+      add_submenu_page(__FILE__, __('Overview', 'statpress'), __('Overview', 'statpress'), $mincap, __FILE__, 'iriStatPressMain');
       add_submenu_page(__FILE__, __('Details', 'statpress'), __('Details', 'statpress'), $mincap, __FILE__ . '&statpress_action=details', 'iriStatPressDetails');
       add_submenu_page(__FILE__, __('Spy', 'statpress'), __('Spy', 'statpress'), $mincap, __FILE__ . '&statpress_action=spy', 'iriStatPressSpy');
       add_submenu_page(__FILE__, __('Search', 'statpress'), __('Search', 'statpress'), $mincap, __FILE__ . '&statpress_action=search', 'iriStatPressSearch');
@@ -1420,20 +1420,24 @@ document.getElementById(thediv).style.display="none"
           return '';
       }
       
-      function iriCheckBanIP($arg)
+	  function iriCheckBanIP($arg)
       {
-         if (file_exists(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/banips.dat'))
-            $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/banips.dat');
+          if (file_exists(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/banips.dat'))
+              $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '-custom/banips.dat');
           else
               $lines = file(ABSPATH . 'wp-content/plugins/' . dirname(plugin_basename(__FILE__)) . '/def/banips.dat');
-          foreach ($lines as $line_num => $banip)
-          {
-              if (@strpos($arg, rtrim($banip, "\n")) === false)
-                  continue;
-              // riconosciuto, da scartare
-              return '';
+         
+        if ($lines !== false)
+        {
+            foreach ($lines as $banip)
+              {
+               if (@preg_match('/^' . rtrim($banip, "\r\n") . '$/', $arg)){
+                   return true;
+               }
+                  // riconosciuto, da scartare
+              }
           }
-          return $arg;
+          return false;
       }
       
       function iriGetSE($referrer = null)
@@ -1622,7 +1626,7 @@ function iri_StatPress_extractfeedreq($url)
           
           // IP
           $ipAddress = $_SERVER['REMOTE_ADDR'];
-          if (iriCheckBanIP($ipAddress) == '')
+          if (iriCheckBanIP($ipAddress) === true)
           {
               return '';
           }
