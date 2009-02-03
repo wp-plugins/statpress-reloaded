@@ -3,12 +3,12 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/wp-plugins/
    Description: Improved real time stats for your blog
-   Version: 1.5.8
+   Version: 1.5.9
    Author: Manuel Grabowski
    Author URI: http://blog.matrixagents.org/
    */
   
-  $_STATPRESS['version'] = '1.5.7';
+  $_STATPRESS['version'] = '1.5.9';
   $_STATPRESS['feedtype'] = '';
   
   
@@ -36,7 +36,6 @@
 
 
       add_menu_page('StatPress Reloaded', 'StatPress', $mincap, __FILE__, 'iriStatPress');
-      add_submenu_page(__FILE__, __('Overview', 'statpress'), __('Overview', 'statpress'), $mincap, __FILE__, 'iriStatPressMain');
       add_submenu_page(__FILE__, __('Details', 'statpress'), __('Details', 'statpress'), $mincap, __FILE__ . '&statpress_action=details', 'iriStatPressDetails');
       add_submenu_page(__FILE__, __('Spy', 'statpress'), __('Spy', 'statpress'), $mincap, __FILE__ . '&statpress_action=spy', 'iriStatPressSpy');
       add_submenu_page(__FILE__, __('Search', 'statpress'), __('Search', 'statpress'), $mincap, __FILE__ . '&statpress_action=search', 'iriStatPressSearch');
