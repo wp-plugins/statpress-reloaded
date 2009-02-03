@@ -14,9 +14,7 @@ This plugin shows you real time statistics about your blog. It collects informat
 New in 1.5.8 from 03.02.2009:
 ---
 Please see the changelog at "Other Notes".
-
-On a personal note: Recently two people donated and I can't find words to tell you how stunned I am!
-Thank you so much - I really couldn't believe it and thought the mail from Paypal was spam/fraud.
+On a personal note: Recently two people donated and I can't find words to tell you how stunned I am! Thank you so much - I really couldn't believe it and thought the mail from Paypal was spam/fraud.
 ---
 
 This plugin (a highly improved fork of StatPress) shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
