@@ -4,18 +4,12 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.5
 Tested up to: 2.7
-Stable Tag: 1.5.10
+Stable Tag: 1.5.11
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
 
 == Description ==
-
-New in 1.5.8 from 03.02.2009:
----
-Please see the changelog at "Other Notes".
-On a personal note: Recently two people donated and I can't find words to tell you how stunned I am! Thank you so much - I really couldn't believe it and thought the mail from Paypal was spam/fraud.
----
 
 This plugin (a highly improved fork of StatPress) shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
@@ -60,12 +54,13 @@ Put it whereever you want the details to be displayed in your template. Remember
 
 Upload "statpress-reloaded" directory in wp-content/plugins/ . Then just activate it on your plugin management page.
 That's it, you're done!
+(Note: If you have been using the old StatPress before, deactivate it. Your data is taken over!)
 
 
 = Update =
 
-* Deactivate StatPress plugin (no data lost!)
-* Delete "wp-statpress" directory in wp-content/plugins/
+* Deactivate the plugin
+* Delete "statpress-reloaded" directory in wp-content/plugins/
 * Upload the content of the ZIP
 * Activate "Statpress Reloaded" on your plugin management page
 * In the Dashboard click "StatPress", then "StatPressUpdate" and wait until it will add/update db's content
@@ -394,3 +389,8 @@ Please visit the <a href="http://matrixagents.org/phpBB/">discussion board<a/>.
 
 * Fixed error in german translation
 * Updated Definitions (Big thanks to TheChrisD!)
+
+*Version 1.5.11 (05.02.2009)*
+
+* Only a small correction in the Readme, as there was some _really_ misleading detail in the Installation section.
+* Updated Definitions

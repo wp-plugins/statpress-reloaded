@@ -1,4 +1,4 @@
-Last updated 2009-02-04 23:23|This line just here for the date - Remove if you want!|
+Last updated 2009-02-16 16:00|This line just here for the date - Remove if you want!|
 Windows Live Feed Search|Crawler/1.0|
 Alexa|ia_archiver|
 Ask.com/Teoma|Jeeves/Teoma|
@@ -6,23 +6,25 @@ Biz360|Biz360|
 Naver|NaverBot|
 Naver|naver.com|
 Naver|Cowbot|
-cURL|curl/|
-Google|Googlebot/|
-Google|googlebot/|
+cURL|curl|
+Google|Googlebot|
+Google|googlebot|
 Google Images|Googlebot-Image|
 Google AdSense|Mediapartners-Google|
 Google Feedfetcher|Feedfetcher-Google|
 Google Desktop|GoogleDesktop|
-Google Sitemaps|Google-Sitemaps/|
+Google Sitemaps|Google-Sitemaps|
 Google Labs|Python-urllib|
 Google App Engine|AppEngine-Google|
+Google Mobile|Googlebot-Mobile|
 LookSmart|grub-client|
 Yahoo!|slurp@inktomi|
 Yahoo!|Yahoo!Slurp|
 Yahoo!|MMCrawler|
 Yahoo!|Yahoo-Test/4.0|
 Yahoo FeedSeeker|YahooFeedSeeker|
-Yahoo FeedSeeker|YahooFeedSeeker/|
+Yahoo-Yahoo-YSM|Yahoo-Yahoo-YSM|mailto:vertical-crawl-support@yahoo-inc.com|
+YahooCacheSystem|YahooCacheSystem|
 MSN|msnbot|
 AltaVista|Scooter-|
 Wget|Wget/1.|
@@ -87,7 +89,8 @@ DiscoveryEngine|disco/Nutch|
 Worio|woriobot|
 FeedBurner|FeedBurner|
 Steeler|Steeler|http://www.tkl.iis.u-tokyo.ac.jp/~crawler/|
-NetSeer Teemer|Teemer|
+Netseer Teemer|Teemer|
+NetSeer|Netseer|http://www.netseer.com|
 Bloglines|Bloglines|
 Bluecoat proxy|Bluecoat|
 IRLbot|IRLbot|
@@ -127,9 +130,9 @@ YaCy|yacybot|
 Twingly|TwinglyRecon|
 PDFBot|PDFBot|crawler@pdfind.com|
 CCBot|CCBot|http://www.commoncrawl.org/bot.html|
-Tailrank|Tailrank|http://www.tailrank.com/
+Tailrank|Tailrank|http://www.tailrank.com/|
 MLBot|www.metadatalabs.com/mlbot|
-Grazr|Grazr/v|http://grazr.com/
+Grazr|Grazr/v|http://grazr.com/|
 Nutch|UniversityofEdinburgh/Nutch|
 FeedSpider|FeedSpider/|
 Twitturls|http://twitturls.com|
@@ -137,6 +140,7 @@ KaloogaBot|KaloogaBot|
 Twitturly|Twitturly|
 Yanga|Yanga|
 magpie-crawler|+http://www.brandwatch.net|
+MagpieRSS|MagpieRSS|http://magpierss.sf.net|
 MP3 Bot|http://mp3realm.org/mp3bot/|
 Runnk|http://www.runnk.com/|
 ScoutJet|www.scoutjet.com|
@@ -149,16 +153,14 @@ Wells Search|Wells|
 KiwiStatus|KiwiStatus|
 DotBot|DotBot|
 Vagabondo|wise-guys|
-ConveraCrawler|ConveraCrawler|http://ews.converasearch.com/crawl.htm
-BuzzBot|Buzzbot|http://www.buzzlogic.com/|
+ConveraCrawler|ConveraCrawler|http://ews.converasearch.com/crawl.htm|
+BuzzBot|BuzzBot|http://www.buzzlogic.com|
 BlogShares.com|Zipping Along V|
-Yahoo-Yahoo-YSM|Yahoo-Yahoo-YSM|mailto:vertical-crawl-support@yahoo-inc.com|
-YahooCacheSystem|YahooCacheSystem|
 newmoni|newmoni|
-Plonebot|Plonebot|Layered Technologies
+Plonebot|Plonebot|Layered Technologies|
 OpenID|libopkele|
-Galbot|galbot|http://www.galbot.com/bot.html
-Runnk|runnk|http://www.runnk.com
+Galbot|galbot|http://www.galbot.com/bot.html|
+Runnk|runnk|http://www.runnk.com|
 BigBellyBot|BigBellyBot|
 llssbot|llssbot|
 PlantyNet|PlantyNet|
@@ -166,3 +168,13 @@ CatchBot|CatchBot|
 Hive Spy|HiveSpy|
 NewsFire|NewsFire|
 PostRank|postrank.com|
+BlogScope|BlogScope|http://www.blogscope.net/|
+Weive|weivel|http://www.weive.com/page/view/weivel|
+Sogou|Sogou|http://www.sogou.com/docs/help/webmasters.htm#07|
+Speedy|http://www.entireweb.com/about/search_tech/speedy_spider/|
+urlfan|urlfan-bot|http://www.urlfan.com/site/bot/350.html|
+BackType|kame|support@backtype.com|
+TopBlogsInfo|TopBlogsInfo|topblogsinfo@gmail.com|
+Whitevector|Whitevector|http://www.whitevector.com/crawler|
+Spinn3r|Spinn3r|http://spinn3r.com/robot|
+Cazoodle|CazoodleBot|http://www.cazoodle.com/|
