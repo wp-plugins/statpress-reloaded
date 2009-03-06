@@ -3,12 +3,12 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/wp-plugins/
    Description: Improved real time stats for your blog
-   Version: 1.5.12
+   Version: 1.5.13
    Author: Manuel Grabowski
    Author URI: http://blog.matrixagents.org/
    */
   
-  $_STATPRESS['version'] = '1.5.12';
+  $_STATPRESS['version'] = '1.5.13';
   $_STATPRESS['feedtype'] = '';
   
   
@@ -372,7 +372,8 @@
           print "<td>" . $qry_tmonth->visitors . $qry_tmonth->change . "</td>\n";
           
           //TARGET
-          $qry_tmonth->target = round($qry_tmonth->visitors / date("d", current_time('timestamp')) * date('d', mktime(0, 0, 0, date('m', current_time('timestamp'))+1, 0, date('Y', current_time('timestamp')))));
+          
+          $qry_tmonth->target = round($qry_tmonth->visitors / (time() - mktime(0,0,0,date('m'),date('1'),date('Y'))) * (86400 * date('t')));
           if ($qry_lmonth->visitors <> 0)
           {
               $pt = round(100 * ($qry_tmonth->target / $qry_lmonth->visitors) - 100, 1);
@@ -445,7 +446,7 @@
           print "<td>" . $qry_tmonth->pageview . $qry_tmonth->change . "</td>\n";
           
           //TARGET
-          $qry_tmonth->target = round($qry_tmonth->pageview / date("d", current_time('timestamp')) * date('d', mktime(0, 0, 0, date('m', current_time('timestamp'))+1, 0, date('Y', current_time('timestamp')))));
+          $qry_tmonth->target = round($qry_tmonth->pageview / (time() - mktime(0,0,0,date('m'),date('1'),date('Y'))) * (86400 * date('t')));
           if ($qry_lmonth->pageview <> 0)
           {
               $pt = round(100 * ($qry_tmonth->target / $qry_lmonth->pageview) - 100, 1);
@@ -516,7 +517,7 @@
           print "<td>" . $qry_tmonth->spiders . $qry_tmonth->change . "</td>\n";
           
           //TARGET
-          $qry_tmonth->target = round($qry_tmonth->spiders / date("d", current_time('timestamp')) * date('d', mktime(0, 0, 0, date('m', current_time('timestamp'))+1, 0, date('Y', current_time('timestamp')))));
+          $qry_tmonth->target = round($qry_tmonth->spiders / (time() - mktime(0,0,0,date('m'),date('1'),date('Y'))) * (86400 * date('t')));
           if ($qry_lmonth->spiders <> 0)
           {
               $pt = round(100 * ($qry_tmonth->target / $qry_lmonth->spiders) - 100, 1);
@@ -586,7 +587,7 @@
           print "<td>" . $qry_tmonth->feeds . $qry_tmonth->change . "</td>\n";
           
           //TARGET
-          $qry_tmonth->target = round($qry_tmonth->feeds / date("d", current_time('timestamp')) * date('d', mktime(0, 0, 0, date('m', current_time('timestamp'))+1, 0, date('Y', current_time('timestamp')))));
+          $qry_tmonth->target = round($qry_tmonth->feeds / (time() - mktime(0,0,0,date('m'),date('1'),date('Y'))) * (86400 * date('t')));
           if ($qry_lmonth->feeds <> 0)
           {
               $pt = round(100 * ($qry_tmonth->target / $qry_lmonth->feeds) - 100, 1);
@@ -1934,16 +1935,24 @@ function iri_StatPress_extractfeedreq($url)
       				$body = str_replace("%thistotalpages%", $qry[0]->pageview, $body);
       		}
       		
-      		 if (strpos(strtolower($body), "%latesthits%") !== false)
-						{
-							$qry = $wpdb->get_results("SELECT search FROM $table_name WHERE search <> '' ORDER BY id DESC LIMIT 10");
-							$body = str_replace("%latesthits%", $qry[0]->search, $body);
-							for ($counter = 0; $counter < 10; $counter += 1)
-							{
-								$body .= "<br>". $qry[$counter]->search;
-							}
-						}
-   				
+      		if (strpos(strtolower($body), "%latesthits%") !== false)
+			{
+				$qry = $wpdb->get_results("SELECT search FROM $table_name WHERE search <> '' ORDER BY id DESC LIMIT 10");
+				$body = str_replace("%latesthits%", $qry[0]->search, $body);
+				for ($counter = 0; $counter < 10; $counter += 1)
+				{
+					$body .= "<br>". $qry[$counter]->search;
+				}
+			}
+			
+			if (strpos(strtolower($body), "%pagesyesterday%") !== false)
+			{
+				$yesterday = gmdate('Ymd', current_time('timestamp') - 86400);
+				$qry = $wpdb->get_row("SELECT count(DISTINCT ip) AS visitsyesterday FROM $table_name WHERE feed='' AND spider='' AND date = '" . mysql_real_escape_string($yesterday) . "'");
+				$body = str_replace("%pagesyesterday%", iri_StatPress_Decode($qry[0]->visitsyesterday), $body);
+			}
+          
+			
           return $body;
       }
       

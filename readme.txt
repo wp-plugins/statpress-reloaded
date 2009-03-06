@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: stats, statistics, widget, admin, sidebar, visits, visitors, pageview, referrer, spy
 Requires at least: 2.5
 Tested up to: 2.7
-Stable Tag: 1.5.12
+Stable Tag: 1.5.13
 
 This plugin shows you real time statistics about your blog. It collects information about visitors, spiders, search keywords, feeds, browsers, OS etc.
 
@@ -42,8 +42,9 @@ The widget is customizable. These are the available variables:
 * %toppost% - The most viewed Post
 * %topbrowser% - The most used Browser
 * %topos% - The most used O.S.
-* %thistotalpages%
-* %pagestoday%
+* %thistotalpages% - Total pageviews so far
+* %pagestoday% - Pageviews today
+* %pagesyesterday% - Pageviews yesterday
 * %latesthits%
 
 Now you could add these values everywhere! StatPress offers a new PHP function *StatPress_Print()*.
@@ -399,3 +400,11 @@ Please visit the <a href="http://matrixagents.org/phpBB/">discussion board<a/>.
 
 * Added addiotional options to the search limits
 * Updated Definitions
+
+*Version 1.5.13 (06.03.2009)*
+
+* Croation translation, thx to Manja!
+* Fixed calculation of monthly targets, thx to Martin Bergek!
+* Added %pagesyesterday% to the placeholders
+* Updated Definitions
+
