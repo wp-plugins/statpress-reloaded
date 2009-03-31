@@ -8,7 +8,7 @@
    Author URI: http://blog.matrixagents.org/
    */
   
-  $_STATPRESS['version'] = '1.5.14';
+  $_STATPRESS['version'] = '1.5.15';
   $_STATPRESS['feedtype'] = '';
   
   
@@ -1948,8 +1948,8 @@ function iri_StatPress_extractfeedreq($url)
 			if (strpos(strtolower($body), "%pagesyesterday%") !== false)
 			{
 				$yesterday = gmdate('Ymd', current_time('timestamp') - 86400);
-				$qry = $wpdb->get_row("SELECT count(DISTINCT ip) AS visitsyesterday FROM $table_name WHERE feed='' AND spider='' AND date = '" . mysql_real_escape_string($yesterday) . "'");
-				$body = str_replace("%pagesyesterday%", iri_StatPress_Decode($qry[0]->visitsyesterday), $body);
+				$qry = $wpdb->get_row("SELECT count(DISTINCT ip) AS visitsyesterday FROM $table_name WHERE feed='' AND spider='' AND date = '" . $yesterday . "'");
+				$body = str_replace("%pagesyesterday%", (is_array($qry) ? $qry[0]->visitsyesterday : 0), $body);
 			}
           
 			
