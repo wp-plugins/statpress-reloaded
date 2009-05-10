@@ -3,12 +3,12 @@
    Plugin Name: StatPress Reloaded
    Plugin URI: http://blog.matrixagents.org/wp-plugins/
    Description: Improved real time stats for your blog
-   Version: 1.5.17
+   Version: 1.5.20
    Author: Manuel Grabowski
    Author URI: http://blog.matrixagents.org/
    */
   
-  $_STATPRESS['version'] = '1.5.17';
+  $_STATPRESS['version'] = '1.5.20';
   $_STATPRESS['feedtype'] = '';
   
   
@@ -297,7 +297,7 @@
           print "date" . $del . "time" . $del . "ip" . $del . "urlrequested" . $del . "agent" . $del . "referrer" . $del . "search" . $del . "nation" . $del . "os" . $del . "browser" . $del . "searchengine" . $del . "spider" . $del . "feed\n";
           foreach ($qry as $rk)
           {
-              print '"' . $rk->date . '"' . $del . '"' . $rk->time . '"' . $del . '"' . $rk->ip . '"' . $del . '"' . $rk->urlrequested . '"' . $del . '"' . $rk->agent . '"' . $del . '"' . $rk->referrer . '"' . $del . '"' . $rk->search . '"' . $del . '"' . $rk->nation . '"' . $del . '"' . $rk->os . '"' . $del . '"' . $rk->browser . '"' . $del . '"' . $rk->searchengine . '"' . $del . '"' . $rk->spider . '"' . $del . '"' . $rk->feed . '"' . "\n";
+              print '"' . $rk->date . '"' . $del . '"' . $rk->time . '"' . $del . '"' . $rk->ip . '"' . $del . '"' . $rk->urlrequested . '"' . $del . '"' . $rk->agent . '"' . $del . '"' . $rk->referrer . '"' . $del . '"' . urldecode($rk->search) . '"' . $del . '"' . $rk->nation . '"' . $del . '"' . $rk->os . '"' . $del . '"' . $rk->browser . '"' . $del . '"' . $rk->searchengine . '"' . $del . '"' . $rk->spider . '"' . $del . '"' . $rk->feed . '"' . "\n";
           }
           die();
       }
@@ -757,7 +757,7 @@
           $qry = $wpdb->get_results("SELECT date,time,referrer,urlrequested,search,searchengine FROM $table_name WHERE search<>'' ORDER BY id DESC $querylimit");
           foreach ($qry as $rk)
           {
-              print "<tr><td>" . irihdate($rk->date) . "</td><td>" . $rk->time . "</td><td><a href='" . $rk->referrer . "'>" . $rk->search . "</a></td><td>" . $rk->searchengine . "</td><td><a href='" . irigetblogurl() . ((strpos($rk->urlrequested, 'index.php') === FALSE) ? $rk->urlrequested : '') . "'>" . __('page viewed', 'statpress') . "</a></td></tr>\n";
+              print "<tr><td>" . irihdate($rk->date) . "</td><td>" . $rk->time . "</td><td><a href='" . $rk->referrer . "'>" . urldecode($rk->search) . "</a></td><td>" . $rk->searchengine . "</td><td><a href='" . irigetblogurl() . ((strpos($rk->urlrequested, 'index.php') === FALSE) ? $rk->urlrequested : '') . "'>" . __('page viewed', 'statpress') . "</a></td></tr>\n";
           }
           print "</table></div>";
           
@@ -879,11 +879,37 @@
           global $wpdb;
           $table_name = $wpdb->prefix . "statpress";
           
+          $LIMIT = 20;
+          
+          if(isset($_GET['pn']))
+          {
+          	// Get Current page from URL
+          	$page = $_GET['pn'];
+          	if($page <= 0)
+          	{
+          		// Page is less than 0 then set it to 1
+          		$page = 1;
+          	}
+          }
+          else
+          {
+          	// URL does not show the page set it to 1
+          	$page = 1;
+          }
+          
+          	// Create MySQL Query String
+			$strqry = "SELECT id FROM $table_name WHERE (spider='' AND feed='') GROUP BY ip";
+			$query = $wpdb->get_results($strqry);
+			$TOTALROWS = $wpdb->num_rows;
+			$NumOfPages = $TOTALROWS / $LIMIT;
+			$LimitValue = ($page * $LIMIT) - $LIMIT;
+			
+			
           // Spy
           $today = gmdate('Ymd', current_time('timestamp'));
           $yesterday = gmdate('Ymd', current_time('timestamp') - 86400);
           print "<div class='wrap'><h2>" . __('Spy', 'statpress') . "</h2>";
-          $sql = "SELECT ip,nation,os,browser,agent FROM $table_name WHERE (spider='' AND feed='') AND (date BETWEEN '$yesterday' AND '$today') GROUP BY ip ORDER BY id DESC LIMIT 20";
+          $sql = "SELECT ip,nation,os,browser,agent FROM $table_name WHERE (spider='' AND feed='') GROUP BY ip ORDER BY id DESC LIMIT $LimitValue, $LIMIT";
           $qry = $wpdb->get_results($sql);
 ?>
 <script>
@@ -894,6 +920,39 @@ document.getElementById(thediv).style.display="none"
 }
 </script>
 <div align="center">
+<div id="paginating" align="center">Pages:
+<?php
+
+// Check to make sure we’re not on page 1 or Total number of pages is not 1
+if($page == ceil($NumOfPages) && $page != 1) {
+  for($i = 1; $i <= ceil($NumOfPages)-1; $i++) {
+    // Loop through the number of total pages
+    if($i > 0) {
+      // if $i greater than 0 display it as a hyperlink
+      echo '<a href="' . $_SERVER['SCRIPT_NAME'] . '?page=statpress-reloaded/statpress.php&statpress_action=spy&pn=' . $i . '">' . $i . '</a> ';
+      }
+    }
+}
+if($page == ceil($NumOfPages) ) {
+  $startPage = $page;
+} else {
+  $startPage = 1;
+}
+for ($i = $startPage; $i <= $page+6; $i++) {
+  // Display first 7 pages
+  if ($i <= ceil($NumOfPages)) {
+    // $page is not the last page
+    if($i == $page) {
+      // $page is current page
+      echo " [{$i}] ";
+    } else {
+      // Not the current page Hyperlink them
+      echo '<a href="' . $_SERVER['SCRIPT_NAME'] . '?page=statpress-reloaded/statpress.php&statpress_action=spy&pn=' . $i . '">' . $i . '</a> ';
+    }
+  }
+}
+?>
+</div>
 <table id="mainspytab" name="mainspytab" width="99%" border="0" cellspacing="0" cellpadding="4">
 <?php
           foreach ($qry as $rk)
@@ -921,7 +980,7 @@ document.getElementById(thediv).style.display="none"
                   print "<td><div><a href='" . irigetblogurl() . ((strpos($details->urlrequested, 'index.php') === FALSE) ? $details->urlrequested : '') . "' target='_blank'>" . iri_StatPress_Decode($details->urlrequested) . "</a>";
                   if ($details->searchengine != '')
                   {
-                      print "<br><small>" . __('arrived from', 'statpress') . " <b>" . $details->searchengine . "</b> " . __('searching', 'statpress') . " <a href='" . $details->referrer . "' target=_blank>" . $details->search . "</a></small>";
+                      print "<br><small>" . __('arrived from', 'statpress') . " <b>" . $details->searchengine . "</b> " . __('searching', 'statpress') . " <a href='" . $details->referrer . "' target=_blank>" . urldecode($details->search) . "</a></small>";
                   }
                   elseif ($details->referrer != '' && strpos($details->referrer, get_option('home')) === false)
                   {
@@ -1332,6 +1391,12 @@ document.getElementById(thediv).style.display="none"
                   {
                       $rk->$fld = iri_StatPress_Decode($rk->$fld);
                   }
+                  
+                  if ($fld == 'search')
+                  {
+                  	$rk->$fld = urldecode($rk->$fld);
+                  }
+                  
                   //      $chl.=urlencode(my_substr($rk->$fld,0,50))."|";
                   //      $chd.=($tdwidth*$pc/100)."|";
                   print "<tr><td style='width:400px;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>" . my_substr($rk->$fld, 0, 50);
@@ -1457,7 +1522,7 @@ document.getElementById(thediv).style.display="none"
                   $tab = explode("=", $variables[$i]);
                   if ($tab[0] == $key)
                   {
-                      return($nome . "|" . urldecode($tab[1]));
+                      return($nome . "|" . urlencode($tab[1]));
                   }
               }
           }
@@ -1886,6 +1951,7 @@ function iri_StatPress_extractfeedreq($url)
           }
           if (strpos(strtolower($body), "%browser%") !== false)
           {
+              $userAgent = (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');
               $browser = iriGetBrowser($userAgent);
               $body = str_replace("%browser%", $browser, $body);
           }
@@ -1938,10 +2004,10 @@ function iri_StatPress_extractfeedreq($url)
       		if (strpos(strtolower($body), "%latesthits%") !== false)
 			{
 				$qry = $wpdb->get_results("SELECT search FROM $table_name WHERE search <> '' ORDER BY id DESC LIMIT 10");
-				$body = str_replace("%latesthits%", $qry[0]->search, $body);
+				$body = str_replace("%latesthits%", urldecode($qry[0]->search), $body);
 				for ($counter = 0; $counter < 10; $counter += 1)
 				{
-					$body .= "<br>". $qry[$counter]->search;
+					$body .= "<br>". urldecode($qry[$counter]->search);
 				}
 			}
 			
